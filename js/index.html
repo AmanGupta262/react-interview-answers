@@ -1,0 +1,967 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>JavaScript Interview Answers</title><style>
+:root{--bg:#fafaf9;--card:#fff;--text:#1c1917;--muted:#57534e;--border:#e7e5e4;--accent:#2563eb;
+--short-bg:#ecfdf5;--short-bd:#10b981;--tip-bg:#fffbeb;--tip-bd:#f59e0b;--want-bg:#eff6ff;--want-bd:#3b82f6;
+--story-bg:#f5f3ff;--story-bd:#8b5cf6;--code-bg:#1e1e2e;--code-fg:#e4e4e7;--inline-bg:#f1f0ef}
+@media (prefers-color-scheme:dark){:root{--bg:#0c0a09;--card:#1c1917;--text:#e7e5e4;--muted:#a8a29e;--border:#2e2b29;--accent:#60a5fa;
+--short-bg:#052e22;--tip-bg:#2d2106;--want-bg:#0b1d3a;--story-bg:#1e1538;--code-bg:#111;--inline-bg:#292524}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.65 -apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif}
+header{padding:28px 24px 8px;max-width:900px;margin:0 auto}
+header h1{margin:0 0 6px;font-size:28px}
+header p{margin:0;color:var(--muted)}
+.layout{display:flex;max-width:1280px;margin:0 auto}
+nav{position:sticky;top:0;height:100vh;overflow-y:auto;width:300px;flex-shrink:0;padding:20px 12px 40px 20px;border-right:1px solid var(--border);font-size:13.5px}
+nav input{width:100%;padding:8px 10px;margin-bottom:12px;border:1px solid var(--border);border-radius:8px;background:var(--card);color:var(--text);font-size:14px}
+nav a{display:block;color:var(--muted);text-decoration:none;padding:3px 6px;border-radius:5px}
+nav a:hover{background:var(--inline-bg);color:var(--text)}
+nav a.l2{font-weight:700;color:var(--text);margin-top:14px}
+main{flex:1;min-width:0;padding:8px 24px 80px;max-width:900px}
+h2{font-size:24px;margin:48px 0 16px;padding-bottom:8px;border-bottom:2px solid var(--accent)}
+h3{font-size:18.5px;margin:0 0 12px}
+h4{font-size:16px;margin:20px 0 8px}
+.q{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px 22px;margin:18px 0;scroll-margin-top:12px}
+p{margin:10px 0}
+.short,.tip,.want,.story,.note{padding:10px 14px;border-radius:8px;border-left:4px solid}
+.short{background:var(--short-bg);border-color:var(--short-bd);font-size:16.5px}
+.tip{background:var(--tip-bg);border-color:var(--tip-bd)}
+.want{background:var(--want-bg);border-color:var(--want-bd)}
+.story{background:var(--story-bg);border-color:var(--story-bd);font-style:italic}
+.note{background:var(--tip-bg);border-color:var(--tip-bd);margin:12px 0}
+ul,ol{padding-left:22px;margin:8px 0}
+li{margin:4px 0}
+code{font:13.5px/1.5 Menlo,Consolas,monospace;background:var(--inline-bg);padding:1px 5px;border-radius:4px}
+pre{background:var(--code-bg);color:var(--code-fg);padding:14px 16px;border-radius:8px;overflow-x:auto;margin:12px 0}
+pre code{background:none;padding:0;color:inherit}
+.tw{overflow-x:auto;margin:12px 0}
+table{border-collapse:collapse;width:100%;font-size:14.5px}
+th,td{border:1px solid var(--border);padding:8px 10px;text-align:left;vertical-align:top}
+th{background:var(--inline-bg)}
+tr:nth-child(even) td{background:color-mix(in srgb,var(--inline-bg) 45%,transparent)}
+a{color:var(--accent)}
+@media (max-width:860px){.layout{display:block}nav{position:static;height:auto;width:auto;border-right:0;border-bottom:1px solid var(--border);max-height:50vh}main{padding:8px 16px 60px}}
+@media print{nav{display:none}.q{break-inside:avoid}}</style></head><body>
+<header><a href="../" style="font-size:14px;text-decoration:none">&larr; All topics</a><h1>JavaScript Interview Answers</h1><p>Each answer: a <b>short answer</b> to say first (green), the explanation, a code example where useful, and an <b>interview tip</b> (amber) for follow-ups.</p></header>
+<div class="layout"><nav><input id="f" placeholder="Search questions..." aria-label="Search questions"><a class="l2" href="#part-1-execution-context-hoisting">Part 1: Execution Context &amp; Hoisting</a><a class="l3" href="#1-how-does-javascript-execute-code">1. How does JavaScript execute code?</a><a class="l3" href="#2-what-is-the-event-loop-and-in-what-order-do-microtasks-and-macrotasks-run">2. What is the event loop, and in what order do microtasks and macrotasks run?</a><a class="l3" href="#3-what-is-hoisting">3. What is hoisting?</a><a class="l3" href="#4-do-function-expressions-arrow-functions-and-classes-hoist">4. Do function expressions, arrow functions and classes hoist?</a><a class="l3" href="#5-what-is-the-temporal-dead-zone-tdz">5. What is the temporal dead zone (TDZ)?</a><a class="l3" href="#6-what-is-the-difference-between-var-let-and-const">6. What is the difference between var, let and const?</a><a class="l2" href="#part-2-scope-closures">Part 2: Scope &amp; Closures</a><a class="l3" href="#7-what-are-scope-lexical-environment-and-the-scope-chain">7. What are scope, lexical environment and the scope chain?</a><a class="l3" href="#8-how-does-block-scope-work-and-what-is-shadowing-including-illegal-shadowing">8. How does block scope work, and what is shadowing (including illegal shadowing)?</a><a class="l3" href="#9-what-is-a-closure">9. What is a closure?</a><a class="l3" href="#10-why-does-a-var-loop-with-settimeout-print-the-same-number-and-how-do-you-fix-it">10. Why does a var loop with setTimeout print the same number, and how do you fix it?</a><a class="l3" href="#11-what-are-practical-uses-of-closures">11. What are practical uses of closures?</a><a class="l3" href="#12-what-is-the-difference-between-a-function-declaration-function-expression-anonymous-function-and-named-function-expression">12. What is the difference between a function declaration, function expression, anonymous function and named function expression?</a><a class="l3" href="#13-what-is-a-factory-function-and-how-does-it-differ-from-a-constructor-function">13. What is a factory function, and how does it differ from a constructor function?</a><a class="l2" href="#part-3-types-and-coercion">Part 3: Types and Coercion</a><a class="l3" href="#14-what-is-the-difference-between-primitives-and-objects-in-javascript">14. What is the difference between primitives and objects in JavaScript?</a><a class="l3" href="#15-what-is-the-difference-between-and-and-when-would-you-use">15. What is the difference between == and ===, and when would you use ==?</a><a class="l3" href="#16-what-are-the-quirks-of-typeof">16. What are the quirks of typeof?</a><a class="l3" href="#17-what-is-the-difference-between-null-and-undefined">17. What is the difference between null and undefined?</a><a class="l3" href="#18-what-is-nan-and-how-do-you-check-for-it-reliably">18. What is NaN and how do you check for it reliably?</a><a class="l3" href="#19-what-are-truthy-and-falsy-values">19. What are truthy and falsy values?</a><a class="l3" href="#20-how-does-implicit-type-coercion-work-explain-a-few-classic-puzzles">20. How does implicit type coercion work? Explain a few classic puzzles.</a><a class="l3" href="#21-why-does-0-1-0-2-0-3-and-how-do-you-handle-money-or-precision">21. Why does 0.1 + 0.2 !== 0.3 and how do you handle money or precision?</a><a class="l2" href="#part-4-language-essentials">Part 4: Language Essentials</a><a class="l3" href="#22-what-is-the-difference-between-a-shallow-copy-and-a-deep-copy">22. What is the difference between a shallow copy and a deep copy?</a><a class="l3" href="#23-how-do-you-implement-a-deep-clone-function">23. How do you implement a deep clone function?</a><a class="l2" href="#part-5-functions-and-objects">Part 5: Functions and Objects</a><a class="l3" href="#24-what-are-the-differences-between-arrow-functions-and-regular-functions">24. What are the differences between arrow functions and regular functions?</a><a class="l3" href="#25-when-do-you-use-call-apply-and-bind-in-real-code">25. When do you use call, apply, and bind in real code?</a><a class="l3" href="#26-what-is-currying-and-why-is-it-useful">26. What is currying and why is it useful?</a><a class="l3" href="#27-what-are-higher-order-functions">27. What are higher-order functions?</a><a class="l3" href="#28-what-is-a-pure-function-and-why-does-it-matter">28. What is a pure function and why does it matter?</a><a class="l3" href="#29-explain-the-prototype-chain-and-prototypal-inheritance">29. Explain the prototype chain and prototypal inheritance.</a><a class="l3" href="#30-how-do-es6-classes-relate-to-prototypes-explain-static-private-fields-and-extends">30. How do ES6 classes relate to prototypes? Explain static, private fields, and extends.</a><a class="l3" href="#31-what-does-object-create-do-and-when-would-you-use-it">31. What does Object.create do and when would you use it?</a><a class="l3" href="#32-what-is-structuredclone-and-what-can-it-not-copy">32. What is structuredClone and what can it not copy?</a><a class="l3" href="#33-what-is-the-difference-between-object-freeze-object-seal-and-object-preventextensions">33. What is the difference between Object.freeze, Object.seal, and Object.preventExtensions?</a><a class="l3" href="#34-what-are-getters-and-setters-in-javascript-objects">34. What are getters and setters in JavaScript objects?</a><a class="l3" href="#35-what-is-a-symbol-and-what-is-it-used-for">35. What is a Symbol and what is it used for?</a><a class="l3" href="#36-what-are-weakmap-and-weakset-and-when-are-they-useful">36. What are WeakMap and WeakSet and when are they useful?</a><a class="l3" href="#37-what-is-the-difference-between-map-and-a-plain-object">37. What is the difference between Map and a plain Object?</a><a class="l3" href="#38-what-is-a-set-and-how-do-you-use-it-in-practice">38. What is a Set and how do you use it in practice?</a><a class="l2" href="#part-6-this">Part 6: this</a><a class="l3" href="#39-how-is-the-value-of-this-determined">39. How is the value of <code>this</code> determined?</a><a class="l3" href="#40-what-is-this-substitution-and-how-does-strict-mode-change-this">40. What is this substitution, and how does strict mode change <code>this</code>?</a><a class="l3" href="#41-how-do-arrow-functions-treat-this-and-when-should-you-not-use-them">41. How do arrow functions treat <code>this</code>, and when should you not use them?</a><a class="l3" href="#42-why-does-a-method-lose-this-when-passed-as-a-callback-and-how-do-you-fix-it">42. Why does a method lose <code>this</code> when passed as a callback, and how do you fix it?</a><a class="l2" href="#part-7-promises-async-await">Part 7: Promises &amp; async/await</a><a class="l3" href="#43-what-are-the-drawbacks-of-callbacks-and-how-do-promises-solve-them">43. What are the drawbacks of callbacks, and how do promises solve them?</a><a class="l3" href="#44-what-are-the-states-of-a-promise-and-how-do-chaining-and-catch-work">44. What are the states of a promise, and how do chaining and <code>catch</code> work?</a><a class="l3" href="#45-how-does-promise-all-work">45. How does Promise.all work?</a><a class="l3" href="#46-how-does-promise-allsettled-work">46. How does Promise.allSettled work?</a><a class="l3" href="#47-how-does-promise-race-work">47. How does Promise.race work?</a><a class="l3" href="#48-how-does-promise-any-work-and-what-is-aggregateerror">48. How does Promise.any work, and what is AggregateError?</a><a class="l3" href="#49-when-would-you-use-all-allsettled-race-or-any">49. When would you use all, allSettled, race or any?</a><a class="l3" href="#50-how-do-async-functions-and-await-work">50. How do async functions and <code>await</code> work?</a><a class="l3" href="#51-how-do-you-handle-errors-in-async-await">51. How do you handle errors in async/await?</a><a class="l2" href="#part-8-async-javascript">Part 8: Async JavaScript</a><a class="l3" href="#52-predict-the-order-sync-code-process-nexttick-settimeout-promises-and-queuemicrotask-what-is-the-difference-between-microtasks-and-macrotasks">52. Predict the order: sync code, process.nextTick/setTimeout, promises, and queueMicrotask. What is the difference between microtasks and macrotasks?</a><a class="l3" href="#53-what-is-abortcontroller-and-how-do-you-cancel-async-work">53. What is AbortController and how do you cancel async work?</a><a class="l3" href="#54-what-are-generators-and-where-are-they-useful">54. What are generators and where are they useful?</a><a class="l3" href="#55-what-are-iterators-and-the-iterable-protocol-what-are-async-iterators">55. What are iterators and the iterable protocol? What are async iterators?</a><a class="l3" href="#56-how-do-you-run-async-calls-in-sequence-vs-parallel-and-why-does-await-inside-foreach-not-work">56. How do you run async calls in sequence vs parallel, and why does await inside forEach not work?</a><a class="l2" href="#part-9-es6-and-beyond">Part 9: ES6 and Beyond</a><a class="l3" href="#57-how-does-destructuring-work-including-defaults-renaming-and-nesting">57. How does destructuring work, including defaults, renaming, and nesting?</a><a class="l3" href="#58-what-is-the-difference-between-spread-and-rest-operators">58. What is the difference between spread and rest operators?</a><a class="l3" href="#59-what-is-optional-chaining-and-when-should-you-avoid-it">59. What is optional chaining and when should you avoid it?</a><a class="l3" href="#60-what-is-the-nullish-coalescing-operator-and-how-is-it-different-from">60. What is the nullish coalescing operator and how is it different from ||?</a><a class="l3" href="#61-what-is-the-difference-between-es-modules-and-commonjs">61. What is the difference between ES Modules and CommonJS?</a><a class="l3" href="#62-what-are-tagged-template-literals">62. What are tagged template literals?</a><a class="l3" href="#63-what-are-proxy-and-reflect-and-where-are-they-used">63. What are Proxy and Reflect, and where are they used?</a><a class="l2" href="#part-10-dom-and-events">Part 10: DOM and Events</a><a class="l3" href="#64-explain-event-bubbling-and-capturing">64. Explain event bubbling and capturing.</a><a class="l3" href="#65-what-is-event-delegation-and-why-is-it-useful">65. What is event delegation and why is it useful?</a><a class="l3" href="#66-what-is-the-difference-between-preventdefault-stoppropagation-and-stopimmediatepropagation">66. What is the difference between preventDefault, stopPropagation, and stopImmediatePropagation?</a><a class="l3" href="#67-what-are-the-differences-between-localstorage-sessionstorage-and-cookies">67. What are the differences between localStorage, sessionStorage, and cookies?</a><a class="l3" href="#68-what-is-the-difference-between-debounce-and-throttle">68. What is the difference between debounce and throttle?</a><a class="l2" href="#part-11-polyfills">Part 11: Polyfills</a><a class="l3" href="#69-how-do-you-resolve-an-array-of-promise-returning-tasks-sequentially">69. How do you resolve an array of promise-returning tasks sequentially?</a><a class="l3" href="#70-how-do-you-implement-infinite-currying-like-add-1-2-3">70. How do you implement infinite currying, like add(1)(2)(3)()?</a><a class="l3" href="#71-how-do-you-implement-curry">71. How do you implement curry?</a><a class="l3" href="#72-how-do-you-implement-function-prototype-call">72. How do you implement Function.prototype.call?</a><a class="l3" href="#73-how-do-you-implement-function-prototype-apply">73. How do you implement Function.prototype.apply?</a><a class="l3" href="#74-how-do-you-implement-function-prototype-bind">74. How do you implement Function.prototype.bind?</a><a class="l3" href="#75-how-do-you-implement-array-prototype-map">75. How do you implement Array.prototype.map?</a><a class="l3" href="#76-how-do-you-implement-array-prototype-filter">76. How do you implement Array.prototype.filter?</a><a class="l3" href="#77-how-do-you-implement-array-prototype-reduce">77. How do you implement Array.prototype.reduce?</a><a class="l3" href="#78-how-do-you-implement-a-promise-from-scratch">78. How do you implement a Promise from scratch?</a><a class="l3" href="#79-how-do-you-implement-promise-all">79. How do you implement Promise.all?</a><a class="l3" href="#80-how-do-you-implement-promise-allsettled">80. How do you implement Promise.allSettled?</a><a class="l3" href="#81-how-do-you-implement-promise-race">81. How do you implement Promise.race?</a><a class="l3" href="#82-how-do-you-implement-promise-any">82. How do you implement Promise.any?</a><a class="l3" href="#83-how-do-you-implement-array-prototype-flat">83. How do you implement Array.prototype.flat?</a><a class="l2" href="#part-12-coding-questions">Part 12: Coding Questions</a><a class="l3" href="#84-implement-debounce-with-cancel-and-optional-leading-edge">84. Implement debounce (with cancel and optional leading edge).</a><a class="l3" href="#85-implement-throttle">85. Implement throttle.</a><a class="l3" href="#86-implement-memoize-with-a-cache-key-for-multiple-arguments">86. Implement memoize (with a cache key for multiple arguments).</a><a class="l3" href="#87-implement-once-run-a-function-only-one-time">87. Implement once (run a function only one time).</a><a class="l3" href="#88-implement-an-eventemitter-on-off-once-emit">88. Implement an EventEmitter (on, off, once, emit).</a><a class="l3" href="#89-implement-deepequal">89. Implement deepEqual.</a><a class="l3" href="#90-implement-a-function-that-retries-a-promise-returning-task-n-times-with-delay">90. Implement a function that retries a promise-returning task N times (with delay).</a><a class="l3" href="#91-split-an-array-into-chunks-of-size-n">91. Split an array into chunks of size N.</a><a class="l3" href="#92-implement-groupby-and-know-the-built-in-object-groupby">92. Implement groupBy (and know the built-in Object.groupBy).</a><a class="l2" href="#part-13-output-based-trick-questions">Part 13: Output-Based Trick Questions</a><a class="l3" href="#93-what-does-1-2-3-map-parseint-return">93. What does ["1", "2", "3"].map(parseInt) return?</a><a class="l3" href="#94-what-is-the-output-of-the-default-sort-on-numbers">94. What is the output of the default sort on numbers?</a><a class="l3" href="#95-what-does-this-chained-assignment-print">95. What does this chained assignment print?</a><a class="l3" href="#96-what-is-the-output-when-objects-are-used-as-object-keys">96. What is the output when objects are used as object keys?</a><a class="l3" href="#97-in-what-order-does-this-async-await-code-print">97. In what order does this async/await code print?</a><a class="l3" href="#98-what-does-a-return-in-try-finally-produce">98. What does a return in try/finally produce?</a><a class="l3" href="#99-why-is-true">99. Why is [] == ![] true?</a><a class="l2" href="#part-14-browser-rendering-performance">Part 14: Browser, Rendering &amp; Performance</a><a class="l3" href="#100-how-does-a-browser-turn-html-css-and-js-into-pixels-critical-rendering-path">100. How does a browser turn HTML, CSS and JS into pixels (critical rendering path)?</a><a class="l3" href="#101-what-is-the-difference-between-reflow-and-repaint">101. What is the difference between reflow and repaint?</a><a class="l3" href="#102-what-is-the-difference-between-normal-async-and-defer-scripts">102. What is the difference between normal, async and defer scripts?</a><a class="l3" href="#103-what-are-render-blocking-and-parser-blocking-resources-and-what-is-the-preload-scanner">103. What are render-blocking and parser-blocking resources, and what is the preload scanner?</a><a class="l3" href="#104-how-would-you-optimise-the-critical-rendering-path">104. How would you optimise the critical rendering path?</a><a class="l3" href="#105-how-does-http-caching-with-cache-control-work">105. How does HTTP caching with Cache-Control work?</a><a class="l3" href="#106-what-is-the-difference-between-etag-and-last-modified-conditional-requests-304">106. What is the difference between ETag and Last-Modified (conditional requests, 304)?</a><a class="l3" href="#107-what-are-core-web-vitals">107. What are Core Web Vitals?</a><a class="l2" href="#part-15-security-and-miscellaneous">Part 15: Security and Miscellaneous</a><a class="l3" href="#108-what-is-xss-and-how-do-you-prevent-it">108. What is XSS and how do you prevent it?</a><a class="l3" href="#109-what-is-csrf-and-how-do-you-prevent-it">109. What is CSRF and how do you prevent it?</a><a class="l3" href="#110-what-is-cors-and-why-do-preflight-requests-happen">110. What is CORS and why do preflight requests happen?</a><a class="l3" href="#111-what-are-common-causes-of-memory-leaks-in-javascript">111. What are common causes of memory leaks in JavaScript?</a><a class="l3" href="#112-how-does-garbage-collection-work-in-javascript">112. How does garbage collection work in JavaScript?</a><a class="l2" href="#part-16-browser-react-internals">Part 16: Browser &amp; React internals</a><a class="l3" href="#113-how-does-react-update-the-dom-virtual-dom-and-reconciliation">113. How does React update the DOM (virtual DOM and reconciliation)?</a><a class="l3" href="#114-what-does-react-memo-do">114. What does React.memo do?</a></nav><main><h2 id="part-1-execution-context-hoisting">Part 1: Execution Context &amp; Hoisting</h2><section class="q"><h3 id="1-how-does-javascript-execute-code">1. How does JavaScript execute code?</h3><p class="short"><b>Short answer:</b> JavaScript is synchronous and single-threaded: one call stack, one line at a time. Code runs inside execution contexts, each created in two phases: memory creation, then code execution.</p><p class="want"><b>Real-life example:</b> A single chef working through one order ticket at a time; if a dish needs a sub-recipe, the chef pauses the ticket, finishes the sub-recipe, then resumes.</p><ul><li>The engine first creates a global execution context (GEC) holding two parts: Memory (variable environment) and Thread of Execution.</li><li>Phase 1, memory creation: <code>var</code> variables get <code>undefined</code>, function declarations get the whole function body, <code>let</code>/<code>const</code> are registered but left uninitialised (temporal dead zone).</li><li>Phase 2, code execution: lines run top to bottom and variables get their real values.</li><li>Every function call creates a new execution context that repeats both phases; when the function returns, that context is popped and destroyed.</li><li>The contexts are managed by the call stack (LIFO); too many nested calls without returning gives <code>RangeError: Maximum call stack size exceeded</code>.</li><li>Timers, network and DOM events are handled by the host (browser or Node), not by the single JS thread.</li></ul><pre><code>var n = 2;
+function square(num) {
+  var ans = num * num;
+  return ans;
+}
+var sq2 = square(n);
+var sq4 = square(4);
+console.log(sq2, sq4);
+// Stack over time: [GEC] -&gt; [GEC, square(2)] -&gt; [GEC] -&gt; [GEC, square(4)] -&gt; [GEC]</code></pre><p class="want"><b>Output:</b> <code>4 16</code></p><p class="tip"><b>Interview tip:</b> Mention that <code>this</code> and the scope chain are also set up when an execution context is created, and be ready to draw the stack for a nested call.</p></section><section class="q"><h3 id="2-what-is-the-event-loop-and-in-what-order-do-microtasks-and-macrotasks-run">2. What is the event loop, and in what order do microtasks and macrotasks run?</h3><p class="short"><b>Short answer:</b> The event loop pushes queued callbacks onto the call stack only when it is empty. After every macrotask (script, <code>setTimeout</code>, I/O, UI event) the whole microtask queue (promise callbacks, <code>queueMicrotask</code>) is drained before the next macrotask.</p><p class="want"><b>Real-life example:</b> A bank counter: the teller serves the current customer fully, then clears all quick "urgent" slips (microtasks) before calling the next person in the regular queue (macrotasks).</p><ul><li>Synchronous code always finishes first because the stack must be empty before anything from a queue runs.</li><li><code>then</code>/<code>catch</code>/<code>finally</code> callbacks and <code>await</code> continuations are microtasks.</li><li><code>setTimeout(fn, 0)</code> is a macrotask with a minimum delay, so it runs after all pending microtasks.</li><li>A microtask that keeps queueing more microtasks can starve rendering and timers.</li></ul><pre><code>console.log("start");
+setTimeout(() =&gt; console.log("timeout"), 0);
+Promise.resolve().then(() =&gt; console.log("promise"));
+console.log("end");</code></pre><p class="want"><b>Output:</b> <code>start</code>, <code>end</code>, <code>promise</code>, <code>timeout</code></p><p class="tip"><b>Interview tip:</b> Browsers render between macrotasks (not between microtasks), and <code>setTimeout(fn, 0)</code> is clamped to about 4ms after 5 nested calls.</p></section><section class="q"><h3 id="3-what-is-hoisting">3. What is hoisting?</h3><p class="short"><b>Short answer:</b> Hoisting is the effect of the memory creation phase: declarations are registered before any code runs, so <code>var</code> variables read as <code>undefined</code> and function declarations can be called before they appear in the code.</p><ul><li>Nothing physically moves; the engine simply allocates memory for declarations first.</li><li>Function declarations are hoisted with their full body, so they work before the line they are written on.</li><li><code>var</code> is hoisted and initialised to <code>undefined</code>; only the declaration is hoisted, never the assignment.</li></ul><pre><code>getName();
+console.log(x);
+console.log(getName);
+
+var x = 10;
+function getName() {
+  console.log("name");
+}</code></pre><p class="want"><b>Output:</b> <code>name</code>, <code>undefined</code>, then the function itself (<code>[Function: getName]</code> in Node, its source in a browser console)</p><p class="tip"><b>Interview tip:</b> Hoisting is per scope: <code>var</code> is hoisted to the top of its function, <code>let</code>/<code>const</code> to the top of their block.</p></section><section class="q"><h3 id="4-do-function-expressions-arrow-functions-and-classes-hoist">4. Do function expressions, arrow functions and classes hoist?</h3><p class="short"><b>Short answer:</b> The variable name is hoisted but the function value is not. With <code>var</code> the name is <code>undefined</code> so calling it throws <code>TypeError</code>; with <code>let</code>/<code>const</code>/<code>class</code> it is in the temporal dead zone so touching it throws <code>ReferenceError</code>.</p><ul><li>Only function declarations are hoisted with their body; <code>var f = () =&gt; {}</code> hoists only <code>var f</code> as <code>undefined</code>.</li><li>Correction to a common claim: an arrow function assigned with <code>const</code> does not get <code>undefined</code>, it stays uninitialised until its line runs.</li><li>Classes behave like <code>let</code>: hoisted but in the TDZ.</li></ul><pre><code>try { early(); } catch (e) { console.log(e.name + ": " + e.message); }
+var early = () =&gt; console.log("hi");
+
+try { late(); } catch (e) { console.log(e.name + ": " + e.message); }
+const late = () =&gt; console.log("hi");</code></pre><p class="want"><b>Output:</b> <code>TypeError: early is not a function</code>, <code>ReferenceError: Cannot access 'late' before initialization</code></p><p class="tip"><b>Interview tip:</b> The two error types are the giveaway: <code>TypeError</code> means the binding exists with <code>undefined</code>, <code>ReferenceError</code> means TDZ or no binding at all.</p></section><section class="q"><h3 id="5-what-is-the-temporal-dead-zone-tdz">5. What is the temporal dead zone (TDZ)?</h3><p class="short"><b>Short answer:</b> The TDZ is the time between entering a scope (when <code>let</code>/<code>const</code>/<code>class</code> bindings are hoisted) and the line that initialises them; any access in that window throws a <code>ReferenceError</code>.</p><ul><li><code>let</code> and <code>const</code> are hoisted, otherwise the inner <code>let</code> in a block would not shadow an outer variable of the same name.</li><li>That is why the TDZ error says "Cannot access 'x' before initialization" rather than "x is not defined".</li><li>Even <code>typeof</code> throws inside the TDZ, while <code>typeof</code> on a never-declared name safely returns <code>"undefined"</code>.</li><li>Default parameter expressions also have a TDZ (<code>function f(a = b, b) {}</code> throws).</li></ul><pre><code>let v = "outer";
+{
+  try { console.log(v); } catch (e) { console.log(e.message); }
+  let v = "inner";
+}
+try { typeof t; } catch (e) { console.log(e.message); }
+let t = 1;
+console.log(typeof neverDeclared);</code></pre><p class="want"><b>Output:</b> <code>Cannot access 'v' before initialization</code>, <code>Cannot access 't' before initialization</code>, <code>undefined</code></p><p class="tip"><b>Interview tip:</b> The TDZ is temporal (about when code runs), not spatial (where the code sits), so a function that reads a <code>let</code> declared below it works fine if it is called after initialisation.</p></section><section class="q"><h3 id="6-what-is-the-difference-between-var-let-and-const">6. What is the difference between var, let and const?</h3><p class="short"><b>Short answer:</b> <code>var</code> is function-scoped, hoisted as <code>undefined</code>, redeclarable and attaches to the global object; <code>let</code> and <code>const</code> are block-scoped, live in the TDZ until initialised and cannot be redeclared; <code>const</code> also cannot be reassigned.</p><div class="tw"><table><tr><th></th><th>var</th><th>let</th><th>const</th></tr><tr><td>Scope</td><td>function (or global)</td><td>block</td><td>block</td></tr><tr><td>Hoisting</td><td>yes, initialised to <code>undefined</code></td><td>yes, TDZ</td><td>yes, TDZ</td></tr><tr><td>Redeclare in same scope</td><td>allowed</td><td>SyntaxError</td><td>SyntaxError</td></tr><tr><td>Reassign</td><td>allowed</td><td>allowed</td><td>TypeError</td></tr><tr><td>Initialiser required</td><td>no</td><td>no</td><td>yes (<code>SyntaxError: Missing initializer in const declaration</code>)</td></tr><tr><td>Becomes <code>window</code> property (global scope)</td><td>yes</td><td>no</td><td>no</td></tr></table></div><ul><li><code>const</code> protects the binding, not the value: object contents can still be mutated unless frozen with <code>Object.freeze</code>.</li><li>Redeclaration and missing-initialiser errors are early SyntaxErrors, so the whole script fails before any line runs.</li><li><code>let a = 10; var a = 100;</code> and <code>var a = 10; let a = 100;</code> are both SyntaxErrors.</li></ul><pre><code>var a = 1;
+var a = 2;
+console.log(a);
+
+const c = { n: 1 };
+c.n = 2;
+console.log(c.n);
+try { c = {}; } catch (e) { console.log(e.name + ": " + e.message); }</code></pre><p class="want"><b>Output:</b> <code>2</code>, <code>2</code>, <code>TypeError: Assignment to constant variable.</code></p><p class="tip"><b>Interview tip:</b> Default to <code>const</code>, use <code>let</code> when you must reassign, and avoid <code>var</code>; the per-iteration binding of <code>let</code> in loops is the practical reason it matters.</p></section><h2 id="part-2-scope-closures">Part 2: Scope &amp; Closures</h2><section class="q"><h3 id="7-what-are-scope-lexical-environment-and-the-scope-chain">7. What are scope, lexical environment and the scope chain?</h3><p class="short"><b>Short answer:</b> Scope decides where a variable is accessible. A lexical environment is a function's local memory plus a reference to its parent's lexical environment, and linking these gives the scope chain used for variable lookup.</p><ul><li>Lexical means "where the function is written in the source", not where it is called from.</li><li>Lookup starts in the current environment and walks outwards through parents until the global scope; failing that you get <code>ReferenceError</code>.</li><li>Scope is fixed at write time (static), which is what makes closures possible.</li><li>Kinds of scope: global, function, block (<code>{}</code> with <code>let</code>/<code>const</code>/<code>class</code>), and module.</li></ul><pre><code>const g = "global";
+function outer() {
+  const o = "outer";
+  function inner() {
+    const i = "inner";
+    console.log(i, o, g);
+  }
+  inner();
+}
+outer();</code></pre><p class="want"><b>Output:</b> <code>inner outer global</code></p><p class="tip"><b>Interview tip:</b> Lookups resolve only inward-to-outward, never the reverse, so an outer scope can never see an inner variable.</p></section><section class="q"><h3 id="8-how-does-block-scope-work-and-what-is-shadowing-including-illegal-shadowing">8. How does block scope work, and what is shadowing (including illegal shadowing)?</h3><p class="short"><b>Short answer:</b> A block is code in curly braces; <code>let</code>, <code>const</code> and <code>class</code> declared inside stay inside, while <code>var</code> ignores blocks. Shadowing is declaring a same-named variable in an inner scope; it is legal unless a <code>var</code> would clash with an outer <code>let</code>/<code>const</code> in the same function.</p><ul><li>A block-scoped <code>let b</code> in <code>{}</code> is a separate variable from the outer <code>b</code>, so changing it leaves the outer one untouched.</li><li><code>var a</code> inside a block is not shadowing at all: it is the same function/global <code>a</code>, so it overwrites the outer value.</li><li>Illegal shadowing: a <code>var</code> inside a block conflicts with an enclosing <code>let</code>/<code>const</code> in the same function because <code>var</code> hoists up into that scope.</li><li>Shadowing <code>let</code> with <code>var</code> inside a different function is legal because the <code>var</code> stops at the function boundary.</li></ul><pre><code>var a = 100;
+let b = 100;
+const c = 100;
+{
+  var a = 10;
+  let b = 20;
+  const c = 30;
+  console.log(a, b, c);
+}
+console.log(a, b, c);</code></pre><p class="want"><b>Output:</b> <code>10 20 30</code>, then <code>10 100 100</code></p><pre><code>try { new Function("let a = 10; { var a = 100; }"); }
+catch (e) { console.log(e.name + ": " + e.message); }
+new Function("var a = 10; { let a = 100; }");
+console.log("var outside, let inside is fine");</code></pre><p class="want"><b>Output:</b> <code>SyntaxError: Identifier 'a' has already been declared</code>, <code>var outside, let inside is fine</code></p><p class="tip"><b>Interview tip:</b> Block scope for functions in sloppy mode is quirky (Annex B hoisting); use function expressions or strict mode in blocks.</p></section><section class="q"><h3 id="9-what-is-a-closure">9. What is a closure?</h3><p class="short"><b>Short answer:</b> A closure is a function bundled together with a reference to the lexical environment where it was created, so it can keep using outer variables even after the outer function has returned.</p><p class="want"><b>Real-life example:</b> A backpack: when the inner function leaves its home function, it carries the variables it needs with it.</p><ul><li>Closures capture variables by reference, not by value, so later changes to the variable are visible inside the closure.</li><li>Technically every function is a closure, but the word matters when the inner function outlives its creator.</li><li>Engines keep alive only the outer variables the inner function actually references, so unused outer variables can be freed.</li></ul><pre><code>function makeGreeter(greeting) {
+  return function (name) {
+    return greeting + ", " + name;
+  };
+}
+const hi = makeGreeter("Hi");
+console.log(hi("Asha"));</code></pre><p class="want"><b>Output:</b> <code>Hi, Asha</code></p><p class="tip"><b>Interview tip:</b> Say "function plus lexical scope" and then immediately give a use case (private state, memoize, once); the definition alone sounds memorised.</p></section><section class="q"><h3 id="10-why-does-a-var-loop-with-settimeout-print-the-same-number-and-how-do-you-fix-it">10. Why does a var loop with setTimeout print the same number, and how do you fix it?</h3><p class="short"><b>Short answer:</b> <code>var</code> is function-scoped, so every callback closes over the same single <code>i</code>; by the time the timers fire the loop has finished and <code>i</code> is <code>6</code>. <code>let</code> creates a new binding per iteration, so each closure sees its own value.</p><ul><li>With <code>var</code> there is one shared <code>i</code>; the loop ends when <code>i</code> becomes 6, and all five callbacks read that 6.</li><li>With <code>let</code>, each iteration gets a fresh copy of <code>i</code> (copied from the previous iteration), so each callback captures a different binding.</li><li>Pre-ES6 fix: wrap the call in an IIFE (or a helper function) that receives <code>i</code> as a parameter, giving each callback its own variable <code>j</code>.</li><li>Another fix: pass an argument to the timer, <code>setTimeout(console.log, i * 10, i)</code>.</li></ul><pre><code>for (var i = 1; i &lt;= 5; i++) {
+  setTimeout(function () { console.log(i); }, i * 10);
+}</code></pre><p class="want"><b>Output:</b> <code>6</code> printed five times</p><pre><code>for (let i = 1; i &lt;= 5; i++) {
+  setTimeout(function () { console.log(i); }, i * 10);
+}</code></pre><p class="want"><b>Output:</b> <code>1 2 3 4 5</code> (one per line)</p><pre><code>for (var i = 1; i &lt;= 5; i++) {
+  (function (j) {
+    setTimeout(function () { console.log(j); }, j * 10);
+  })(i);
+}</code></pre><p class="want"><b>Output:</b> <code>1 2 3 4 5</code> (one per line)</p><p class="tip"><b>Interview tip:</b> If asked to fix it without <code>let</code>, reach for the IIFE or the extra <code>setTimeout</code> argument; mention that the helper-function version only needs <code>var</code> because the parameter creates the new scope.</p></section><section class="q"><h3 id="11-what-are-practical-uses-of-closures">11. What are practical uses of closures?</h3><p class="short"><b>Short answer:</b> Data privacy (module and factory patterns), stateful functions like counters, <code>once</code>, memoization, partial application/currying, and event handlers or callbacks that remember their setup data.</p><ul><li>Encapsulation: variables inside the outer function are unreachable except through the returned functions.</li><li>Function factories: <code>makeMultiplier(2)</code> returns a function preconfigured with its multiplier.</li><li>Memoization and <code>once</code> keep a cache or flag in the closure between calls.</li><li>Debounce, throttle and React hooks (stale closure bugs) all rely on closures.</li><li>Downside: a long-lived closure keeps everything it references alive, which can leak large objects or DOM nodes if never released.</li></ul><pre><code>function createCounter() {
+  let count = 0;
+  return {
+    increment() { return ++count; },
+    getCount() { return count; },
+  };
+}
+const counter = createCounter();
+counter.increment();
+counter.increment();
+console.log(counter.getCount(), counter.count);
+
+function once(fn) {
+  let done = false, result;
+  return (...args) =&gt; {
+    if (!done) { done = true; result = fn(...args); }
+    return result;
+  };
+}
+const init = once(() =&gt; { console.log("init ran"); return 42; });
+console.log(init(), init());</code></pre><p class="want"><b>Output:</b> <code>2 undefined</code>, <code>init ran</code>, <code>42 42</code></p><p class="tip"><b>Interview tip:</b> Bring up stale closures in React (<code>useEffect</code> reading old state) to show you have hit the downside in real code.</p></section><section class="q"><h3 id="12-what-is-the-difference-between-a-function-declaration-function-expression-anonymous-function-and-named-function-expression">12. What is the difference between a function declaration, function expression, anonymous function and named function expression?</h3><p class="short"><b>Short answer:</b> A declaration is a statement that is hoisted with its body; an expression is a function used as a value and is not hoisted; an anonymous function has no name; a named function expression has a name visible only inside itself.</p><ul><li>Declaration (statement): <code>function x() {}</code>, hoisted, callable before its line.</li><li>Expression: <code>const x = function () {}</code>, behaves like the variable it is assigned to.</li><li>Anonymous function: a bare <code>function () {}</code> as a statement is a SyntaxError ("Function statements require a function name"); it is valid only where a value is expected (assignment, argument, return, IIFE).</li><li>Named function expression: <code>const x = function xyz() {}</code>; <code>xyz</code> exists only inside the function body (useful for recursion and stack traces), not outside.</li><li>Parameters are the names in the definition; arguments are the values passed in the call.</li><li>First-class functions: functions are values that can be assigned, passed as arguments and returned, which is what makes callbacks and closures work.</li></ul><pre><code>function decl() { return "decl"; }
+const expr = function () { return "expr"; };
+const nfe = function inner() { return typeof inner; };
+console.log(decl(), expr(), nfe());
+try { inner(); } catch (e) { console.log(e.name + ": " + e.message); }
+try { new Function("function () {}"); } catch (e) { console.log(e.name + ": " + e.message); }</code></pre><p class="want"><b>Output:</b> <code>decl expr function</code>, <code>ReferenceError: inner is not defined</code>, <code>SyntaxError: Function statements require a function name</code></p><p class="tip"><b>Interview tip:</b> Mention that higher-order functions (map, filter, debounce) exist only because functions are first-class.</p></section><section class="q"><h3 id="13-what-is-a-factory-function-and-how-does-it-differ-from-a-constructor-function">13. What is a factory function, and how does it differ from a constructor function?</h3><p class="short"><b>Short answer:</b> A factory function is an ordinary function that returns a new object each call and needs no <code>new</code>; unlike a constructor it does not rely on <code>this</code> or prototypes, and variables inside it become truly private through closures.</p><ul><li>No <code>new</code> keyword, so no risk of forgetting it and getting <code>this</code> bound to the global object.</li><li>Private state: variables in the factory are visible only to the methods defined inside it.</li><li>Trade-off: each object gets its own copy of every method, while constructor/class methods live once on the prototype and save memory.</li><li>Factories cannot be used with <code>instanceof</code> because the result is a plain object.</li></ul><pre><code>function createPerson(name, age) {
+  return {
+    name,
+    age,
+    greet() { return `Hello, my name is ${this.name} and I am ${this.age} years old.`; },
+  };
+}
+console.log(createPerson("Alice", 30).greet());
+
+function createCounter() {
+  let count = 0;
+  return {
+    increment() { count++; return count; },
+    decrement() { count--; return count; },
+    getCount() { return count; },
+  };
+}
+const counter = createCounter();
+counter.increment();
+console.log(counter.increment(), counter.getCount(), counter.count);
+console.log(counter.decrement());</code></pre><p class="want"><b>Output:</b> <code>Hello, my name is Alice and I am 30 years old.</code>, <code>2 2 undefined</code>, <code>1</code></p><p class="tip"><b>Interview tip:</b> Hard-private <code>#fields</code> in classes now give privacy without per-instance methods, so choose factories for composition, classes for many instances.</p></section><h2 id="part-3-types-and-coercion">Part 3: Types and Coercion</h2><section class="q"><h3 id="14-what-is-the-difference-between-primitives-and-objects-in-javascript">14. What is the difference between primitives and objects in JavaScript?</h3><p class="short"><b>Short answer:</b> Primitives are immutable values copied by value; objects (including arrays and functions) are mutable and copied by reference.</p><p class="want"><b>Real-life example:</b> A primitive is a photocopy of a page; an object is a shared Google Doc link.</p><ul><li>There are 7 primitives: string, number, bigint, boolean, undefined, null, symbol.</li><li>Assigning or passing a primitive copies the value, so changes never leak back.</li><li>Assigning or passing an object copies the reference, so two variables point at the same data.</li><li><code>===</code> on objects compares references, not contents.</li><li>Primitives have no properties; <code>"abc".length</code> works because JS temporarily wraps it in a String object.</li></ul><pre><code>let a = 5; let b = a; b++;
+console.log(a, b);
+const o1 = { n: 1 }; const o2 = o1; o2.n = 99;
+console.log(o1.n, { n: 1 } === { n: 1 });</code></pre><p class="want"><b>Output:</b> <code>5 6</code> then <code>99 false</code></p><p class="tip"><b>Interview tip:</b> Mention that <code>const</code> freezes the binding, not the object, because interviewers often follow up with that.</p></section><section class="q"><h3 id="15-what-is-the-difference-between-and-and-when-would-you-use">15. What is the difference between == and ===, and when would you use ==?</h3><p class="short"><b>Short answer:</b> <code>===</code> compares without conversion; <code>==</code> converts types first using the abstract equality rules.</p><ul><li><code>===</code> returns false immediately if types differ (and treats <code>NaN !== NaN</code>).</li><li><code>==</code> coerces: <code>"5" == 5</code> is true, <code>0 == false</code> is true, <code>null == undefined</code> is true.</li><li><code>null == undefined</code> is the only <code>==</code> use many style guides allow (<code>x == null</code> checks both).</li><li>Objects are compared by reference with both operators; <code>==</code> only converts an object when the other side is a primitive.</li><li><code>Object.is</code> differs from <code>===</code> for <code>NaN</code> (equal) and <code>+0/-0</code> (not equal).</li></ul><pre><code>console.log("5" == 5, 0 == false, null == undefined, null == 0, [] == false);
+console.log("5" === 5, NaN === NaN, Object.is(NaN, NaN), Object.is(0, -0));</code></pre><p class="want"><b>Output:</b> <code>true true true false true</code> then <code>false false true false</code></p><p class="tip"><b>Interview tip:</b> Say you default to <code>===</code> and explain the single <code>== null</code> exception.</p></section><section class="q"><h3 id="16-what-are-the-quirks-of-typeof">16. What are the quirks of typeof?</h3><p class="short"><b>Short answer:</b> <code>typeof null</code> is <code>"object"</code> (a legacy bug), arrays are <code>"object"</code>, and functions are <code>"function"</code>; undeclared variables return <code>"undefined"</code> instead of throwing.</p><ul><li>Use <code>Array.isArray</code> for arrays and <code>x === null</code> for null.</li><li><code>typeof NaN</code> is <code>"number"</code>.</li><li><code>typeof</code> on a let/const in its temporal dead zone throws a ReferenceError.</li><li>For precise tags use <code>Object.prototype.toString.call(x)</code>.</li></ul><pre><code>console.log(typeof null, typeof [], typeof NaN, typeof function () {}, typeof undeclaredVar);
+console.log(typeof class {}, typeof Symbol(), typeof 10n);
+console.log(Object.prototype.toString.call([]), Object.prototype.toString.call(null));</code></pre><p class="want"><b>Output:</b> <code>object object number function undefined</code> then <code>function symbol bigint</code> then <code>[object Array] [object Null]</code></p><p class="tip"><b>Interview tip:</b> Name the null bug and its safe replacement in one breath.</p></section><section class="q"><h3 id="17-what-is-the-difference-between-null-and-undefined">17. What is the difference between null and undefined?</h3><p class="short"><b>Short answer:</b> <code>undefined</code> means a value was never assigned; <code>null</code> is an explicit "no value" set by the developer.</p><ul><li>Uninitialised variables, missing properties, and functions without return give <code>undefined</code>.</li><li><code>null</code> is assigned deliberately, for example to clear a reference.</li><li><code>typeof</code> gives <code>"undefined"</code> vs <code>"object"</code>; both are falsy and <code>null == undefined</code>.</li><li>JSON.stringify drops <code>undefined</code> properties but keeps <code>null</code>.</li><li>Default parameters trigger only for <code>undefined</code>, not <code>null</code>.</li></ul><pre><code>function f(x = "default") { return x; }
+console.log(f(undefined), f(null));
+console.log(JSON.stringify({ a: undefined, b: null }));</code></pre><p class="want"><b>Output:</b> <code>default null</code> then <code>{"b":null}</code></p><p class="tip"><b>Interview tip:</b> The default-parameter and JSON differences show real-world awareness.</p></section><section class="q"><h3 id="18-what-is-nan-and-how-do-you-check-for-it-reliably">18. What is NaN and how do you check for it reliably?</h3><p class="short"><b>Short answer:</b> NaN is the number-type result of an invalid numeric operation and is the only value not equal to itself; use <code>Number.isNaN</code>.</p><ul><li>Global <code>isNaN</code> coerces its argument first, so <code>isNaN("abc")</code> is true.</li><li><code>Number.isNaN</code> does not coerce and is true only for the real NaN.</li><li><code>Object.is(x, NaN)</code> and <code>x !== x</code> also work.</li><li><code>[NaN].includes(NaN)</code> is true but <code>[NaN].indexOf(NaN)</code> is -1.</li></ul><pre><code>console.log(isNaN("abc"), Number.isNaN("abc"), Number.isNaN(NaN));
+console.log([NaN].includes(NaN), [NaN].indexOf(NaN));
+console.log(0 / 0, parseInt("x"), Math.sqrt(-1));</code></pre><p class="want"><b>Output:</b> <code>true false true</code> then <code>true -1</code> then <code>NaN NaN NaN</code></p><p class="tip"><b>Interview tip:</b> Contrast global isNaN with Number.isNaN; that is the actual question being tested.</p></section><section class="q"><h3 id="19-what-are-truthy-and-falsy-values">19. What are truthy and falsy values?</h3><p class="short"><b>Short answer:</b> Falsy values are <code>false, 0, -0, 0n, "", null, undefined, NaN</code>; everything else is truthy, including <code>[]</code>, <code>{}</code>, and <code>"0"</code>.</p><ul><li>Conditions, <code>!</code>, <code>&amp;&amp;</code>, <code>||</code>, and ternaries coerce to boolean.</li><li><code>[]</code> and <code>{}</code> are truthy even though <code>[] == false</code> is true (the two coercion paths differ).</li><li><code>||</code> returns the first truthy operand; <code>&amp;&amp;</code> returns the first falsy one.</li><li>Use <code>??</code> when 0 or "" are valid values.</li></ul><pre><code>const falsy = [false, 0, -0, 0n, "", null, undefined, NaN];
+console.log(falsy.every((v) =&gt; !v));
+console.log(!!"0", !![], !!{}, !!"false");
+console.log(0 || "fallback", 0 ?? "fallback");</code></pre><p class="want"><b>Output:</b> <code>true</code> then <code>true true true true</code> then <code>fallback 0</code></p><p class="tip"><b>Interview tip:</b> Bring up the <code>||</code> vs <code>??</code> bug with a 0 quantity or empty string.</p></section><section class="q"><h3 id="20-how-does-implicit-type-coercion-work-explain-a-few-classic-puzzles">20. How does implicit type coercion work? Explain a few classic puzzles.</h3><p class="short"><b>Short answer:</b> With <code>+</code>, if either operand is a string it concatenates; other arithmetic operators convert to numbers; objects go through <code>valueOf</code>/<code>toString</code> first.</p><ul><li><code>+</code> with a string operand concatenates; <code>-</code>, <code>*</code>, <code>/</code> always coerce to number.</li><li>Unary <code>+</code> is the shortest string-to-number conversion.</li><li><code>[]</code> becomes <code>""</code> and <code>{}</code> becomes <code>"[object Object]"</code> when converted to a primitive.</li><li><code>null</code> becomes 0, <code>undefined</code> becomes NaN, <code>true</code> becomes 1.</li></ul><pre><code>console.log(1 + "2", "3" - 1, "3" * "4", +"", +"abc");
+console.log([] + [], [] + {}, [1, 2] + [3]);
+console.log(true + true, null + 1, undefined + 1);</code></pre><p class="want"><b>Output:</b> <code>12 2 12 0 NaN</code> then <code> [object Object] 1,23</code> then <code>2 1 NaN</code></p><p class="tip"><b>Interview tip:</b> Walk through the steps (ToPrimitive, then string or number) instead of memorising results.</p></section><section class="q"><h3 id="21-why-does-0-1-0-2-0-3-and-how-do-you-handle-money-or-precision">21. Why does 0.1 + 0.2 !== 0.3 and how do you handle money or precision?</h3><p class="short"><b>Short answer:</b> Numbers are IEEE 754 doubles, which cannot represent most decimal fractions exactly, so tiny rounding errors appear.</p><ul><li>Compare with a tolerance such as <code>Math.abs(a - b) &lt; Number.EPSILON</code>.</li><li>For money, store integer minor units (paise or cents) and convert only for display.</li><li>Use <code>toFixed</code> only for display; it returns a string.</li><li>Use <code>BigInt</code> for integers beyond <code>Number.MAX_SAFE_INTEGER</code> (2^53 - 1).</li></ul><pre><code>console.log(0.1 + 0.2, 0.1 + 0.2 === 0.3);
+console.log(Math.abs(0.1 + 0.2 - 0.3) &lt; Number.EPSILON);
+console.log((1999 + 1) / 100, 9007199254740993n + 1n, Number.MAX_SAFE_INTEGER + 2);</code></pre><p class="want"><b>Output:</b> <code>0.30000000000000004 false</code> then <code>true</code> then <code>20 9007199254740994n 9007199254740992</code></p><p class="tip"><b>Interview tip:</b> Say "integers in minor units" for money; it is the answer interviewers want.</p></section><h2 id="part-4-language-essentials">Part 4: Language Essentials</h2><section class="q"><h3 id="22-what-is-the-difference-between-a-shallow-copy-and-a-deep-copy">22. What is the difference between a shallow copy and a deep copy?</h3><p class="short"><b>Short answer:</b> A shallow copy duplicates only the top level, so nested objects and arrays are still shared by reference; a deep copy recursively clones everything so the copy shares nothing with the original.</p><ul><li>Shallow copy tools: spread (<code>{...obj}</code>, <code>[...arr]</code>), <code>Object.assign</code>, <code>Array.from</code>, <code>slice</code>.</li><li>Deep copy tools: <code>structuredClone(obj)</code> (modern, handles Date, Map, Set, cycles), <code>JSON.parse(JSON.stringify(obj))</code>, or a recursive function.</li><li>The JSON trick drops <code>undefined</code>, functions and symbols, turns <code>Date</code> into a string, loses <code>Map</code>/<code>Set</code>/<code>RegExp</code>, converts <code>NaN</code>/<code>Infinity</code> to <code>null</code> and throws on circular references.</li><li><code>structuredClone</code> cannot clone functions or DOM nodes (it throws <code>DataCloneError</code>).</li></ul><pre><code>const obj = { name: "Alice", address: { city: "Wonderland" } };
+const shallow = Object.assign({}, obj);
+shallow.address.city = "New City";
+console.log(obj.address.city);
+
+const arr = [1, 2, { nested: "value" }];
+const shallowArr = [...arr];
+shallowArr[2].nested = "new value";
+console.log(arr[2].nested);
+
+const original = { name: "Alice", address: { city: "Wonderland" }, at: new Date(0) };
+const viaJson = JSON.parse(JSON.stringify(original));
+const viaClone = structuredClone(original);
+viaClone.address.city = "New City";
+console.log(original.address.city, typeof viaJson.at, viaClone.at instanceof Date);</code></pre><p class="want"><b>Output:</b> <code>New City</code>, <code>new value</code>, <code>Wonderland string true</code></p><p class="tip"><b>Interview tip:</b> React state updates rely on shallow copies of the changed path only (immutable updates); deep cloning everything defeats memoization.</p></section><section class="q"><h3 id="23-how-do-you-implement-a-deep-clone-function">23. How do you implement a deep clone function?</h3><p class="short"><b>Short answer:</b> Recursively copy arrays and plain objects, return primitives as-is, special-case <code>Date</code> and <code>RegExp</code>, and keep a <code>WeakMap</code> of already-cloned objects so circular references do not recurse forever.</p><ul><li>The version often written first (<code>typeof obj !== "object"</code> check, then <code>for...in</code>) breaks on cycles, copies inherited enumerable keys, and turns a <code>Date</code> into <code>{}</code>.</li><li>The <code>WeakMap</code> maps each original to its clone, so a second visit returns the clone already being built.</li><li>Production code should usually call <code>structuredClone</code> instead of hand-rolling this.</li></ul><pre><code>function deepClone(value, seen = new WeakMap()) {
+  if (value === null || typeof value !== "object") return value;
+  if (value instanceof Date) return new Date(value);
+  if (value instanceof RegExp) return new RegExp(value.source, value.flags);
+  if (seen.has(value)) return seen.get(value);
+  const copy = Array.isArray(value) ? [] : {};
+  seen.set(value, copy);
+  for (const key of Object.keys(value)) copy[key] = deepClone(value[key], seen);
+  return copy;
+}
+
+const src = { list: [1, { a: 2 }], when: new Date(0) };
+src.self = src;
+const dup = deepClone(src);
+console.log(dup !== src, dup.list[1] !== src.list[1], dup.self === dup, dup.when instanceof Date);</code></pre><p class="want"><b>Output:</b> <code>true true true true</code></p><p class="tip"><b>Interview tip:</b> Name what your version does not handle (Map, Set, typed arrays, getters, prototypes) before the interviewer asks.</p></section><h2 id="part-5-functions-and-objects">Part 5: Functions and Objects</h2><section class="q"><h3 id="24-what-are-the-differences-between-arrow-functions-and-regular-functions">24. What are the differences between arrow functions and regular functions?</h3><p class="short"><b>Short answer:</b> Arrow functions have no own <code>this</code>, <code>arguments</code>, <code>super</code>, or <code>prototype</code>, and cannot be used with <code>new</code>.</p><div class="tw"><table><tr><th>Feature</th><th>Regular function</th><th>Arrow function</th></tr><tr><td><code>this</code></td><td>Set by call site</td><td>Inherited lexically</td></tr><tr><td><code>arguments</code></td><td>Available</td><td>Not available (use rest)</td></tr><tr><td><code>new</code></td><td>Allowed</td><td>TypeError</td></tr><tr><td><code>prototype</code></td><td>Yes</td><td>No</td></tr><tr><td>Good as method</td><td>Yes</td><td>Usually no</td></tr></table></div><ul><li>Do not use arrows for object methods or prototype methods that need <code>this</code>.</li><li>Arrows are ideal for callbacks that must keep the outer <code>this</code>.</li></ul><pre><code>const obj = {
+  name: "obj",
+  regular() { return this.name; },
+  arrow: () =&gt; typeof this,
+};
+console.log(obj.regular(), obj.arrow());
+const arrow = () =&gt; {};
+console.log(arrow.prototype, typeof function () {}.prototype);
+try { new arrow(); } catch (e) { console.log(e.constructor.name); }</code></pre><p class="want"><b>Output:</b> <code>obj object</code> then <code>undefined object</code> then <code>TypeError</code></p><p class="tip"><b>Interview tip:</b> State "lexical this" and give the callback-in-class-method use case.</p></section><section class="q"><h3 id="25-when-do-you-use-call-apply-and-bind-in-real-code">25. When do you use call, apply, and bind in real code?</h3><p class="short"><b>Short answer:</b> All three set <code>this</code> explicitly; call and apply invoke immediately (args list vs array), bind returns a new function with <code>this</code> (and optionally args) fixed.</p><ul><li><code>call(thisArg, a, b)</code> and <code>apply(thisArg, [a, b])</code> run now.</li><li><code>bind(thisArg, a)</code> returns a function for later (event handlers, partial application).</li><li>Borrowing methods: <code>Array.prototype.slice.call(arguments)</code>.</li><li><code>Math.max.apply(null, arr)</code> was the pre-spread idiom.</li><li>A bound function's <code>this</code> cannot be changed by a later call or bind.</li></ul><pre><code>function greet(greeting, punct) { return `${greeting}, ${this.name}${punct}`; }
+const user = { name: "Asha" };
+console.log(greet.call(user, "Hi", "!"), greet.apply(user, ["Hello", "?"]));
+const hi = greet.bind(user, "Hey");
+console.log(hi("."), hi.call({ name: "Other" }, "."));</code></pre><p class="want"><b>Output:</b> <code>Hi, Asha! Hello, Asha?</code> then <code>Hey, Asha. Hey, Asha.</code></p><p class="tip"><b>Interview tip:</b> Mention partial application with bind and that re-binding a bound function does nothing.</p></section><section class="q"><h3 id="26-what-is-currying-and-why-is-it-useful">26. What is currying and why is it useful?</h3><p class="short"><b>Short answer:</b> Currying turns <code>f(a, b, c)</code> into <code>f(a)(b)(c)</code>, so each call takes one argument and returns a function until all are supplied.</p><ul><li>It enables partial application and reusable specialised functions.</li><li>It differs from partial application: currying always returns unary functions, partial fixes some arguments at once.</li><li>Useful in functional pipelines and configuration-style helpers.</li></ul><pre><code>const add = (a) =&gt; (b) =&gt; (c) =&gt; a + b + c;
+const add5 = add(5);
+console.log(add(1)(2)(3), add5(10)(20));
+const log = (level) =&gt; (msg) =&gt; `[${level}] ${msg}`;
+console.log(log("warn")("disk low"));</code></pre><p class="want"><b>Output:</b> <code>6 35</code> then <code>[warn] disk low</code></p><p class="tip"><b>Interview tip:</b> Follow up by offering to write a generic <code>curry(fn)</code>; see the coding section.</p></section><section class="q"><h3 id="27-what-are-higher-order-functions">27. What are higher-order functions?</h3><p class="short"><b>Short answer:</b> Functions that take functions as arguments or return functions; <code>map</code>, <code>filter</code>, <code>reduce</code>, <code>setTimeout</code>, and <code>debounce</code> are all examples.</p><ul><li>They enable abstraction over behaviour, not just data.</li><li>Functions are first-class values in JS, which makes this possible.</li><li>Prefer them over manual loops for readability.</li></ul><pre><code>const times = (n) =&gt; (x) =&gt; x * n;
+const nums = [1, 2, 3, 4];
+console.log(nums.map(times(3)).filter((x) =&gt; x &gt; 5).reduce((a, b) =&gt; a + b, 0));</code></pre><p class="want"><b>Output:</b> <code>27</code></p><p class="tip"><b>Interview tip:</b> Give one example that takes a function and one that returns a function.</p></section><section class="q"><h3 id="28-what-is-a-pure-function-and-why-does-it-matter">28. What is a pure function and why does it matter?</h3><p class="short"><b>Short answer:</b> A pure function returns the same output for the same input and has no side effects (no mutation, I/O, or hidden state).</p><ul><li>Pure functions are trivially testable, cacheable (memoizable), and safe to run in parallel.</li><li>React reducers and render logic rely on purity.</li><li>Mutating arguments or reading <code>Date.now()</code> / <code>Math.random()</code> makes a function impure.</li></ul><pre><code>const impure = (arr) =&gt; { arr.push(1); return arr; };
+const pure = (arr) =&gt; [...arr, 1];
+const src = [0];
+pure(src); console.log(src);
+impure(src); console.log(src);</code></pre><p class="want"><b>Output:</b> <code>[ 0 ]</code> then <code>[ 0, 1 ]</code></p><p class="tip"><b>Interview tip:</b> Tie purity to memoization and React state updates.</p></section><section class="q"><h3 id="29-explain-the-prototype-chain-and-prototypal-inheritance">29. Explain the prototype chain and prototypal inheritance.</h3><p class="short"><b>Short answer:</b> Every object has an internal <code>[[Prototype]]</code> link; property lookup walks that chain until it finds the key or reaches <code>null</code>.</p><ul><li><code>Object.getPrototypeOf(obj)</code> reads the link; <code>__proto__</code> is the legacy accessor.</li><li><code>fn.prototype</code> is the object assigned as <code>[[Prototype]]</code> of instances made with <code>new fn</code>.</li><li>Methods on the prototype are shared across instances, saving memory.</li><li><code>hasOwnProperty</code> / <code>Object.hasOwn</code> distinguish own from inherited keys.</li><li>Writing to an inherited property creates an own property (shadowing).</li></ul><pre><code>function Animal(name) { this.name = name; }
+Animal.prototype.speak = function () { return this.name + " makes a sound"; };
+const dog = new Animal("Rex");
+console.log(dog.speak(), Object.hasOwn(dog, "speak"), "speak" in dog);
+console.log(Object.getPrototypeOf(dog) === Animal.prototype);
+console.log(Object.getPrototypeOf(Animal.prototype) === Object.prototype);</code></pre><p class="want"><b>Output:</b> <code>Rex makes a sound false true</code> then <code>true</code> then <code>true</code></p><p class="tip"><b>Interview tip:</b> Draw the chain <code>dog -&gt; Animal.prototype -&gt; Object.prototype -&gt; null</code>.</p></section><section class="q"><h3 id="30-how-do-es6-classes-relate-to-prototypes-explain-static-private-fields-and-extends">30. How do ES6 classes relate to prototypes? Explain static, private fields, and extends.</h3><p class="short"><b>Short answer:</b> Classes are syntactic sugar over prototypes: methods live on <code>Class.prototype</code>, <code>extends</code> wires the prototype chain, and <code>super</code> calls the parent.</p><ul><li>A class body is always in strict mode and class declarations are not hoisted like functions.</li><li><code>static</code> members live on the constructor itself, not on instances.</li><li><code>#field</code> is truly private (enforced by the engine), unlike the <code>_name</code> convention.</li><li>Calling a class without <code>new</code> throws a TypeError.</li><li>In a derived constructor you must call <code>super()</code> before touching <code>this</code>.</li></ul><pre><code>class Account {
+  #balance = 0;
+  static count = 0;
+  constructor(owner) { this.owner = owner; Account.count++; }
+  deposit(n) { this.#balance += n; return this; }
+  get balance() { return this.#balance; }
+}
+class Savings extends Account {
+  addInterest() { return this.deposit(this.balance * 0.1); }
+}
+const s = new Savings("Ravi").deposit(100).addInterest();
+console.log(s.balance, Account.count, typeof Account, s instanceof Account);
+console.log(Object.hasOwn(s, "balance"), Object.hasOwn(Account.prototype, "deposit"));
+try { Account("x"); } catch (e) { console.log(e.constructor.name); }</code></pre><p class="want"><b>Output:</b> <code>110 1 function true</code> then <code>false true</code> then <code>TypeError</code></p><p class="tip"><b>Interview tip:</b> Say "sugar over prototypes, with real private fields" and show <code>typeof Class === "function"</code>.</p></section><section class="q"><h3 id="31-what-does-object-create-do-and-when-would-you-use-it">31. What does Object.create do and when would you use it?</h3><p class="short"><b>Short answer:</b> <code>Object.create(proto, descriptors?)</code> creates a new object whose <code>[[Prototype]]</code> is <code>proto</code>, without running a constructor.</p><ul><li><code>Object.create(null)</code> makes a dictionary with no inherited keys (no <code>toString</code>, no <code>hasOwnProperty</code>).</li><li>It is the building block of classical inheritance without classes.</li><li>Property descriptors can be passed as the second argument.</li></ul><pre><code>const base = { hello() { return "hi from " + this.name; } };
+const child = Object.create(base);
+child.name = "child";
+console.log(child.hello(), Object.getPrototypeOf(child) === base);
+const dict = Object.create(null);
+dict.key = 1;
+console.log("toString" in dict, "toString" in {});</code></pre><p class="want"><b>Output:</b> <code>hi from child true</code> then <code>false true</code></p><p class="tip"><b>Interview tip:</b> Mention <code>Object.create(null)</code> as a safe hash map for untrusted keys.</p></section><section class="q"><h3 id="32-what-is-structuredclone-and-what-can-it-not-copy">32. What is structuredClone and what can it not copy?</h3><p class="short"><b>Short answer:</b> <code>structuredClone(value)</code> is the built-in deep clone that handles Date, Map, Set, RegExp, typed arrays, and circular references.</p><ul><li>It throws <code>DataCloneError</code> for functions, DOM nodes, and class private state.</li><li>Class instances lose their prototype and become plain objects.</li><li>Symbol keys and getters/setters are not preserved as such.</li><li>Available in modern browsers and Node 17+.</li></ul><pre><code>const src = { when: new Date(0), tags: new Set([1, 2]), m: new Map([["k", 1]]) };
+src.self = src;
+const c = structuredClone(src);
+console.log(c.when instanceof Date, c.tags.has(2), c.self === c, c !== src);
+class P { constructor() { this.x = 1; } hi() {} }
+console.log(structuredClone(new P()) instanceof P);
+try { structuredClone({ f() {} }); } catch (e) { console.log(e.name); }</code></pre><p class="want"><b>Output:</b> <code>true true true true</code> then <code>false</code> then <code>DataCloneError</code></p><p class="tip"><b>Interview tip:</b> Pair it with the JSON-copy limitations from the previous question.</p></section><section class="q"><h3 id="33-what-is-the-difference-between-object-freeze-object-seal-and-object-preventextensions">33. What is the difference between Object.freeze, Object.seal, and Object.preventExtensions?</h3><p class="short"><b>Short answer:</b> freeze blocks add, delete, and modify; seal blocks add and delete but allows modifying existing values; preventExtensions blocks only adding.</p><div class="tw"><table><tr><th>Method</th><th>Add</th><th>Delete</th><th>Modify</th></tr><tr><td>preventExtensions</td><td>No</td><td>Yes</td><td>Yes</td></tr><tr><td>seal</td><td>No</td><td>No</td><td>Yes</td></tr><tr><td>freeze</td><td>No</td><td>No</td><td>No</td></tr></table></div><ul><li>All three are shallow; nested objects stay mutable.</li><li>Failures are silent in sloppy mode and throw TypeError in strict mode.</li><li>Check with <code>Object.isFrozen</code>, <code>isSealed</code>, <code>isExtensible</code>.</li></ul><pre><code>"use strict";
+const o = Object.freeze({ a: 1, inner: { b: 1 } });
+o.inner.b = 2;
+try { o.a = 2; } catch (e) { console.log(e.constructor.name); }
+const s = Object.seal({ a: 1 });
+s.a = 5;
+try { s.z = 1; } catch (e) { console.log(e.constructor.name); }
+console.log(o.inner.b, s.a, Object.isFrozen(o));</code></pre><p class="want"><b>Output:</b> <code>TypeError</code> then <code>TypeError</code> then <code>2 5 true</code></p><p class="tip"><b>Interview tip:</b> Stress "shallow" and mention a recursive deepFreeze if asked.</p></section><section class="q"><h3 id="34-what-are-getters-and-setters-in-javascript-objects">34. What are getters and setters in JavaScript objects?</h3><p class="short"><b>Short answer:</b> Accessor properties run a function on read (<code>get</code>) or write (<code>set</code>) while looking like plain properties.</p><ul><li>Use them for computed values, validation, or read-only views.</li><li>Define them in object literals, classes, or with <code>Object.defineProperty</code>.</li><li>A getter without a setter is read-only (silently ignored in sloppy mode, TypeError in strict).</li><li>They live on the prototype for classes, so they do not appear in <code>Object.keys</code> of an instance.</li></ul><pre><code>const temp = {
+  _c: 25,
+  get f() { return this._c * 9 / 5 + 32; },
+  set f(v) { this._c = (v - 32) * 5 / 9; },
+};
+temp.f = 212;
+console.log(temp._c, temp.f);
+const ro = { get id() { return 7; } };
+ro.id = 9;
+console.log(ro.id);</code></pre><p class="want"><b>Output:</b> <code>100 212</code> then <code>7</code></p><p class="tip"><b>Interview tip:</b> Mention validation in setters and computed properties as the real use cases.</p></section><section class="q"><h3 id="35-what-is-a-symbol-and-what-is-it-used-for">35. What is a Symbol and what is it used for?</h3><p class="short"><b>Short answer:</b> A Symbol is a unique, immutable primitive used as a collision-free property key or to hook into language behaviour via well-known symbols.</p><ul><li><code>Symbol("x") !== Symbol("x")</code> even with the same description; <code>Symbol.for</code> shares one via the global registry.</li><li>Symbol keys are skipped by <code>for...in</code>, <code>Object.keys</code>, and <code>JSON.stringify</code>.</li><li>Well-known symbols: <code>Symbol.iterator</code>, <code>Symbol.asyncIterator</code>, <code>Symbol.toPrimitive</code>, <code>Symbol.hasInstance</code>.</li><li>They give pseudo-private keys but are discoverable via <code>Object.getOwnPropertySymbols</code>.</li></ul><pre><code>const id = Symbol("id");
+const user = { name: "A", [id]: 123 };
+console.log(Object.keys(user), JSON.stringify(user), user[id]);
+console.log(Symbol("x") === Symbol("x"), Symbol.for("x") === Symbol.for("x"));
+console.log(Object.getOwnPropertySymbols(user).length);</code></pre><p class="want"><b>Output:</b> <code>[ 'name' ] {"name":"A"} 123</code> then <code>false true</code> then <code>1</code></p><p class="tip"><b>Interview tip:</b> Name <code>Symbol.iterator</code> as the practical one; it ties into iterators and generators.</p></section><section class="q"><h3 id="36-what-are-weakmap-and-weakset-and-when-are-they-useful">36. What are WeakMap and WeakSet and when are they useful?</h3><p class="short"><b>Short answer:</b> They hold weak references to object keys (or members), so entries disappear when nothing else references the object, which prevents memory leaks.</p><ul><li>Keys must be objects (or non-registered symbols); primitives are rejected.</li><li>They are not iterable and have no <code>size</code> or <code>clear</code>.</li><li>Use cases: private data per object, caching metadata for DOM nodes, tracking visited objects.</li><li>Normal Map would keep the key alive and leak memory.</li></ul><pre><code>const priv = new WeakMap();
+class User {
+  constructor(name) { priv.set(this, { name }); }
+  get name() { return priv.get(this).name; }
+}
+const u = new User("Meera");
+console.log(u.name, priv.has(u));
+try { priv.set("str", 1); } catch (e) { console.log(e.constructor.name); }
+console.log(typeof priv[Symbol.iterator], priv.size);</code></pre><p class="want"><b>Output:</b> <code>Meera true</code> then <code>TypeError</code> then <code>undefined undefined</code></p><p class="tip"><b>Interview tip:</b> Say "no leak because GC can drop the key" and note you cannot iterate them.</p></section><section class="q"><h3 id="37-what-is-the-difference-between-map-and-a-plain-object">37. What is the difference between Map and a plain Object?</h3><p class="short"><b>Short answer:</b> Map allows any key type, preserves insertion order, has <code>size</code>, and is built for frequent add/remove; objects only allow string/symbol keys and inherit prototype keys.</p><div class="tw"><table><tr><th>Feature</th><th>Map</th><th>Object</th></tr><tr><td>Key types</td><td>Any value</td><td>String or Symbol</td></tr><tr><td>Order</td><td>Insertion</td><td>Mostly insertion (integer keys first)</td></tr><tr><td>Size</td><td><code>map.size</code></td><td><code>Object.keys(o).length</code></td></tr><tr><td>Iteration</td><td>Directly iterable</td><td>Needs <code>Object.keys/entries</code></td></tr><tr><td>Inherited keys</td><td>None</td><td>Yes (<code>toString</code> etc.)</td></tr></table></div><ul><li>Use Map for dynamic dictionaries and non-string keys; use objects for fixed records and JSON.</li><li>Maps do not serialise to JSON directly.</li></ul><pre><code>const m = new Map();
+const keyObj = {};
+m.set(keyObj, "obj").set(1, "num").set("1", "str");
+console.log(m.size, m.get(keyObj), m.get(1), m.get("1"));
+const o = {}; o[keyObj] = "a"; o[{}] = "b";
+console.log(Object.keys(o), { b: 1, 2: 1, 1: 1 });</code></pre><p class="want"><b>Output:</b> <code>3 obj num str</code> then <code>[ '[object Object]' ] { '1': 1, '2': 1, b: 1 }</code></p><p class="tip"><b>Interview tip:</b> Mention the object-key stringification and integer-key ordering traps.</p></section><section class="q"><h3 id="38-what-is-a-set-and-how-do-you-use-it-in-practice">38. What is a Set and how do you use it in practice?</h3><p class="short"><b>Short answer:</b> A Set stores unique values of any type with O(1) average <code>has</code>/<code>add</code>/<code>delete</code> and keeps insertion order.</p><ul><li>Deduplicate arrays: <code>[...new Set(arr)]</code>.</li><li>Uniqueness uses SameValueZero, so <code>NaN</code> equals <code>NaN</code> and objects compare by reference.</li><li>Modern engines also offer <code>union</code>, <code>intersection</code>, and <code>difference</code> methods.</li><li>Prefer <code>set.has(x)</code> over <code>array.includes(x)</code> in hot loops.</li></ul><pre><code>console.log([...new Set([1, 2, 2, 3, NaN, NaN, "1"])]);
+const a = new Set([1, 2, 3]), b = new Set([2, 3, 4]);
+console.log([...a].filter((x) =&gt; b.has(x)), new Set([{}, {}]).size);</code></pre><p class="want"><b>Output:</b> <code>[ 1, 2, 3, NaN, '1' ]</code> then <code>[ 2, 3 ] 2</code></p><p class="tip"><b>Interview tip:</b> Mention O(1) lookup against array includes at O(n).</p></section><h2 id="part-6-this">Part 6: this</h2><section class="q"><h3 id="39-how-is-the-value-of-this-determined">39. How is the value of <code>this</code> determined?</h3><p class="short"><b>Short answer:</b> <code>this</code> is decided by how a function is called, not where it is defined (except arrow functions): method call gives the object before the dot, <code>new</code> gives the new object, <code>call</code>/<code>apply</code>/<code>bind</code> give the chosen object, and a plain call gives <code>undefined</code> (strict) or the global object (sloppy).</p><div class="tw"><table><tr><th>Call style</th><th><code>this</code></th></tr><tr><td>Global scope (script)</td><td>global object: <code>window</code> in browsers, <code>global</code> in Node (module top level in Node is <code>module.exports</code>)</td></tr><tr><td>Plain function call <code>f()</code></td><td><code>undefined</code> in strict mode, global object in sloppy mode</td></tr><tr><td>Method call <code>obj.f()</code></td><td><code>obj</code></td></tr><tr><td><code>new F()</code></td><td>the newly created object</td></tr><tr><td><code>f.call(x)</code> / <code>f.apply(x)</code> / <code>f.bind(x)()</code></td><td><code>x</code></td></tr><tr><td>Arrow function</td><td><code>this</code> of the enclosing lexical scope, fixed at creation</td></tr><tr><td>DOM event handler (regular function)</td><td>the element the listener is attached to (<code>event.currentTarget</code>)</td></tr></table></div><pre><code>const user = { name: "Asha", hi() { return this.name; } };
+console.log(user.hi());
+const detached = user.hi;
+console.log(detached.call({ name: "Ben" }));
+function Person(n) { this.n = n; }
+console.log(new Person("Cy").n);</code></pre><p class="want"><b>Output:</b> <code>Asha</code>, <code>Ben</code>, <code>Cy</code></p><p class="tip"><b>Interview tip:</b> Precedence is <code>new</code> over explicit binding (<code>bind</code>/<code>call</code>) over implicit (method) over default; arrow functions ignore all of them.</p></section><section class="q"><h3 id="40-what-is-this-substitution-and-how-does-strict-mode-change-this">40. What is this substitution, and how does strict mode change <code>this</code>?</h3><p class="short"><b>Short answer:</b> In sloppy mode, if <code>this</code> would be <code>undefined</code> or <code>null</code> the engine substitutes the global object (and boxes primitives); in strict mode no substitution happens, so a plain function call sees <code>this === undefined</code>.</p><ul><li><code>this</code> substitution is why an unbound method in sloppy mode silently reads or writes globals instead of crashing.</li><li>Gotcha in the original notes: <code>('use strict');</code> with parentheses is just an expression, not a directive, so it does not enable strict mode. The directive must be a bare string literal at the top of a script or function.</li><li><code>window.x()</code> still gives <code>window</code> even in strict mode because it is a method call on <code>window</code>.</li><li>ES modules and class bodies are always strict.</li></ul><pre><code>'use strict';
+function strictFn() { return this; }
+console.log(strictFn());
+console.log(strictFn.call(globalThis) === globalThis);
+
+// new Function bodies are sloppy, so substitution applies
+const sloppyFn = new Function("return this === globalThis");
+console.log(sloppyFn());</code></pre><p class="want"><b>Output:</b> <code>undefined</code>, <code>true</code>, <code>true</code></p><p class="tip"><b>Interview tip:</b> Call out that <code>class</code> methods are strict, which is why a detached class method throws instead of touching globals.</p></section><section class="q"><h3 id="41-how-do-arrow-functions-treat-this-and-when-should-you-not-use-them">41. How do arrow functions treat <code>this</code>, and when should you not use them?</h3><p class="short"><b>Short answer:</b> Arrow functions have no <code>this</code> of their own; they capture <code>this</code> from the enclosing lexical scope when defined and it can never be changed afterwards, not even by <code>call</code>, <code>apply</code> or <code>bind</code>.</p><ul><li>Good for callbacks inside methods (<code>setTimeout</code>, <code>map</code>) where you want the outer <code>this</code>.</li><li>Bad as object methods: <code>obj = { x: () =&gt; this }</code> captures the outer scope (module or <code>window</code>), not <code>obj</code>.</li><li>Bad as constructors (no <code>new</code>, no <code>prototype</code>) and as DOM handlers that need <code>this</code> to be the element.</li><li>They also have no own <code>arguments</code> and no <code>super</code> binding.</li></ul><pre><code>const obj = {
+  a: 20,
+  regular: function () { return this.a; },
+  arrow: () =&gt; this === obj,
+  nested: function () {
+    const y = () =&gt; this.a;
+    return y();
+  },
+};
+console.log(obj.regular(), obj.arrow(), obj.nested());
+
+const timer = {
+  start() {
+    setTimeout(function () { console.log("function:", this === timer); }, 0);
+    setTimeout(() =&gt; console.log("arrow:", this === timer), 0);
+  },
+};
+timer.start();</code></pre><p class="want"><b>Output:</b> <code>20 false 20</code>, <code>function: false</code>, <code>arrow: true</code></p><p class="tip"><b>Interview tip:</b> An arrow function inherits <code>this</code> from where it is written, so reading "enclosing lexical context" literally (the surrounding function, or module/global if none) answers every output puzzle.</p></section><section class="q"><h3 id="42-why-does-a-method-lose-this-when-passed-as-a-callback-and-how-do-you-fix-it">42. Why does a method lose <code>this</code> when passed as a callback, and how do you fix it?</h3><p class="short"><b>Short answer:</b> Passing <code>obj.method</code> passes only the function; the object before the dot is not carried along, so when it is invoked as a plain function <code>this</code> is <code>undefined</code> (strict) or global (sloppy). Fix it with <code>bind</code>, an arrow wrapper, or class-field arrow functions.</p><ul><li>Extracting a method (<code>const { inc } = counter</code>) or handing it to <code>setTimeout</code>/<code>addEventListener</code> has the same effect.</li><li><code>bind</code> returns a new function with <code>this</code> fixed, while an arrow wrapper <code>() =&gt; counter.inc()</code> re-establishes the method call.</li><li>In React class components this is why handlers were bound in the constructor.</li><li>For DOM listeners written as regular functions, <code>this</code> is the element itself, so a method passed as a listener gets the element as <code>this</code>, not your object.</li></ul><pre><code>class Counter {
+  constructor() { this.n = 0; }
+  inc() { this.n++; return this.n; }
+}
+const c = new Counter();
+const { inc } = c;
+try { inc(); } catch (e) { console.log(e.name + ": " + e.message); }
+console.log(c.inc.bind(c)(), (() =&gt; c.inc())());</code></pre><p class="want"><b>Output:</b> <code>TypeError: Cannot read properties of undefined (reading 'n')</code>, <code>1 2</code></p><p class="tip"><b>Interview tip:</b> <code>bind</code> creates a new function every call, so binding inside a render or in <code>addEventListener</code> makes <code>removeEventListener</code> impossible unless you keep the reference.</p></section><h2 id="part-7-promises-async-await">Part 7: Promises &amp; async/await</h2><section class="q"><h3 id="43-what-are-the-drawbacks-of-callbacks-and-how-do-promises-solve-them">43. What are the drawbacks of callbacks, and how do promises solve them?</h3><p class="short"><b>Short answer:</b> Callbacks lead to callback hell (deeply nested code) and inversion of control (you hand your logic to code you do not control, which may call it twice, late or never). Promises give a standard, chainable object you control.</p><p class="want"><b>Real-life example:</b> A callback is giving a stranger your phone number and hoping they call back once; a promise is a tracking number you check yourself.</p><ul><li>Callback hell: sequential async steps nest into a pyramid, making error handling and reading hard.</li><li>Inversion of control: with a callback you trust a third-party function to invoke yours exactly once with the right arguments.</li><li>A promise is an object representing the eventual completion (or failure) of an async operation; it settles once and handlers are always called asynchronously.</li><li>Promise chains flatten the pyramid because each <code>then</code> returns a new promise.</li></ul><pre><code>const wait = (v, ms) =&gt; new Promise((resolve) =&gt; setTimeout(() =&gt; resolve(v), ms));
+
+wait("order", 10)
+  .then((o) =&gt; wait(o + " -&gt; pay", 10))
+  .then((p) =&gt; wait(p + " -&gt; ship", 10))
+  .then(console.log);</code></pre><p class="want"><b>Output:</b> <code>order -&gt; pay -&gt; ship</code></p><p class="tip"><b>Interview tip:</b> Promises fix the trust problem because resolution is one-shot and the consumer decides what to do with the result.</p></section><section class="q"><h3 id="44-what-are-the-states-of-a-promise-and-how-do-chaining-and-catch-work">44. What are the states of a promise, and how do chaining and <code>catch</code> work?</h3><p class="short"><b>Short answer:</b> A promise is <code>pending</code>, then settles once to <code>fulfilled</code> or <code>rejected</code> and never changes again. <code>then</code> returns a new promise, a thrown error skips ahead to the next <code>catch</code>, and <code>catch</code> only handles errors from earlier in the chain.</p><ul><li>Calling <code>resolve</code> or <code>reject</code> more than once is ignored after the first.</li><li>Returning a value from a handler fulfils the next promise with it; returning a promise makes the chain wait for it; throwing rejects the next promise.</li><li><code>catch(fn)</code> is <code>then(undefined, fn)</code>; handlers placed before it are covered, handlers after it are not.</li><li>If <code>catch</code> returns normally the chain recovers; if it throws, the next <code>catch</code> is needed.</li><li><code>finally</code> runs either way and passes the original value or error through.</li></ul><pre><code>const p = new Promise((resolve, reject) =&gt; {
+  resolve("done");
+  reject(new Error("ignored"));
+});
+
+p.then((v) =&gt; { console.log(v); return v.toUpperCase(); })
+  .then((v) =&gt; { console.log(v); throw new Error("boom"); })
+  .then(() =&gt; console.log("skipped"))
+  .catch((e) =&gt; { console.log("caught", e.message); return "recovered"; })
+  .then((v) =&gt; console.log(v))
+  .finally(() =&gt; console.log("finally"));</code></pre><p class="want"><b>Output:</b> <code>done</code>, <code>DONE</code>, <code>caught boom</code>, <code>recovered</code>, <code>finally</code></p><p class="tip"><b>Interview tip:</b> An unhandled rejection crashes modern Node (since v15) and fires <code>unhandledrejection</code> in browsers, so always end chains with a <code>catch</code>.</p></section><section class="q"><h3 id="45-how-does-promise-all-work">45. How does Promise.all work?</h3><p class="short"><b>Short answer:</b> <code>Promise.all</code> takes an iterable of promises and resolves with an array of results (in input order) once all fulfil; it rejects immediately with the first rejection reason.</p><ul><li>Results keep input order regardless of which promise finishes first.</li><li>On the first rejection the combined promise rejects, but the other promises are not cancelled; they keep running and their results are ignored.</li><li>Non-promise values are treated as already resolved, and an empty iterable resolves immediately with <code>[]</code>.</li></ul><pre><code>const ok = (v, ms) =&gt; new Promise((resolve) =&gt; setTimeout(() =&gt; resolve(v), ms));
+const fail = (v, ms) =&gt; new Promise((_, reject) =&gt; setTimeout(() =&gt; reject(v), ms));
+
+Promise.all([ok("P1 Success", 30), ok("P2 Success", 10), ok("P3 Success", 20)])
+  .then(console.log);
+
+Promise.all([ok("P1 Success", 30), fail("P2 Fail", 10), ok("P3 Success", 20)])
+  .catch(console.log);</code></pre><p class="want"><b>Output:</b> <code>P2 Fail</code>, then <code>[ 'P1 Success', 'P2 Success', 'P3 Success' ]</code></p><p class="tip"><b>Interview tip:</b> Use it for independent parallel requests where one failure invalidates the whole result.</p></section><section class="q"><h3 id="46-how-does-promise-allsettled-work">46. How does Promise.allSettled work?</h3><p class="short"><b>Short answer:</b> It waits for every promise to settle and never rejects; it resolves with an array of <code>{ status: "fulfilled", value }</code> or <code>{ status: "rejected", reason }</code> objects in input order.</p><ul><li>Correction to the usual note: a rejected entry holds <code>reason</code>, not <code>value</code>.</li><li>Ideal when you want partial results, for example loading several widgets where some may fail.</li><li>You inspect <code>status</code> per entry to separate successes from failures.</li></ul><pre><code>const ok = (v, ms) =&gt; new Promise((resolve) =&gt; setTimeout(() =&gt; resolve(v), ms));
+const fail = (v, ms) =&gt; new Promise((_, reject) =&gt; setTimeout(() =&gt; reject(v), ms));
+
+Promise.allSettled([ok("P1 Success", 10), ok("P2 Success", 20), fail("P3 Fail", 30)])
+  .then((r) =&gt; console.log(JSON.stringify(r)));</code></pre><p class="want"><b>Output:</b> <code>[{"status":"fulfilled","value":"P1 Success"},{"status":"fulfilled","value":"P2 Success"},{"status":"rejected","reason":"P3 Fail"}]</code></p><p class="tip"><b>Interview tip:</b> Say "all or nothing" for <code>all</code> versus "best effort" for <code>allSettled</code>.</p></section><section class="q"><h3 id="47-how-does-promise-race-work">47. How does Promise.race work?</h3><p class="short"><b>Short answer:</b> <code>Promise.race</code> settles with the first promise to settle, whether fulfilled or rejected, and ignores the rest.</p><ul><li>The classic use is a timeout: race the real request against a timer that rejects.</li><li>An empty iterable gives a promise that stays pending forever.</li><li>The losing promises are not cancelled; use <code>AbortController</code> to cancel real work.</li></ul><pre><code>const ok = (v, ms) =&gt; new Promise((resolve) =&gt; setTimeout(() =&gt; resolve(v), ms));
+const fail = (v, ms) =&gt; new Promise((_, reject) =&gt; setTimeout(() =&gt; reject(v), ms));
+
+Promise.race([ok("P1 Success", 30), ok("P2 Success", 20), fail("P3 Fail", 10)])
+  .then(console.log, (e) =&gt; console.log("rejected:", e));</code></pre><p class="want"><b>Output:</b> <code>rejected: P3 Fail</code></p><p class="tip"><b>Interview tip:</b> Note that race can reject, which is the difference from <code>any</code>.</p></section><section class="q"><h3 id="48-how-does-promise-any-work-and-what-is-aggregateerror">48. How does Promise.any work, and what is AggregateError?</h3><p class="short"><b>Short answer:</b> <code>Promise.any</code> resolves with the first fulfilled promise and ignores rejections; only if every promise rejects does it reject with an <code>AggregateError</code> whose <code>errors</code> array holds all reasons.</p><ul><li>Good for fallbacks, such as the fastest healthy mirror or CDN.</li><li><code>error.errors</code> keeps the reasons in input order.</li><li>Added in ES2021, so older environments need a polyfill.</li></ul><pre><code>const ok = (v, ms) =&gt; new Promise((resolve) =&gt; setTimeout(() =&gt; resolve(v), ms));
+const fail = (v, ms) =&gt; new Promise((_, reject) =&gt; setTimeout(() =&gt; reject(v), ms));
+
+Promise.any([fail("P1 Fail", 10), ok("P2 Success", 20), fail("P3 Fail", 5)]).then(console.log);
+
+Promise.any([fail("P1 Fail", 10), fail("P2 Fail", 20), fail("P3 Fail", 5)])
+  .catch((e) =&gt; console.log(e.name, e.message, e.errors));</code></pre><p class="want"><b>Output:</b> <code>P2 Success</code>, then <code>AggregateError All promises were rejected [ 'P1 Fail', 'P2 Fail', 'P3 Fail' ]</code></p><p class="tip"><b>Interview tip:</b> Be ready to give the one-line contrast: <code>any</code> ignores rejections, <code>race</code> does not.</p></section><section class="q"><h3 id="49-when-would-you-use-all-allsettled-race-or-any">49. When would you use all, allSettled, race or any?</h3><p class="short"><b>Short answer:</b> Use <code>all</code> when every result is required, <code>allSettled</code> when you want every outcome regardless of failures, <code>race</code> for the first outcome of any kind (timeouts), and <code>any</code> for the first success.</p><div class="tw"><table><tr><th>API</th><th>Resolves when</th><th>Rejects when</th><th>Result</th></tr><tr><td><code>Promise.all</code></td><td>all fulfil</td><td>first rejection</td><td>array of values</td></tr><tr><td><code>Promise.allSettled</code></td><td>all settle</td><td>never</td><td>array of <code>{status, value/reason}</code></td></tr><tr><td><code>Promise.race</code></td><td>first settles as fulfilled</td><td>first settles as rejected</td><td>first outcome</td></tr><tr><td><code>Promise.any</code></td><td>first fulfils</td><td>all reject (<code>AggregateError</code>)</td><td>first value</td></tr></table></div><ul><li>None of them cancel the work of the promises they ignore.</li><li>All four accept any iterable and treat non-promises as resolved values.</li></ul><p class="tip"><b>Interview tip:</b> Mention <code>Promise.withResolvers</code> and <code>AbortSignal.timeout</code> as modern companions for timeouts and manual resolution.</p></section><section class="q"><h3 id="50-how-do-async-functions-and-await-work">50. How do async functions and <code>await</code> work?</h3><p class="short"><b>Short answer:</b> An <code>async</code> function always returns a promise: a returned value is wrapped in a resolved promise and a thrown error becomes a rejection. <code>await</code> pauses only that function until the promise settles, letting the rest of the program keep running.</p><ul><li><code>await</code> is allowed inside async functions (and at the top level of ES modules).</li><li>Correction: returning a promise from an async function does not hand back that same promise object, it returns a new promise that follows it.</li><li>Code after <code>await</code> runs as a microtask continuation, so it is always asynchronous.</li><li><code>await value</code> on a non-promise still yields to the microtask queue.</li></ul><pre><code>const f = async () =&gt; 1;
+const base = Promise.resolve(2);
+const g = async () =&gt; base;
+console.log(f() instanceof Promise, g() === base);
+
+f().then(console.log);
+g().then(console.log);
+
+(async () =&gt; {
+  console.log("Hello World");
+  await null;
+  console.log("after await");
+})();
+console.log("sync end");</code></pre><p class="want"><b>Output:</b> <code>true false</code>, <code>Hello World</code>, <code>sync end</code>, <code>1</code>, <code>after await</code>, <code>2</code> (the <code>2</code> takes extra ticks because the async function must adopt the inner promise)</p><p class="tip"><b>Interview tip:</b> <code>async/await</code> is syntax over promises; explain that each <code>await</code> is a <code>.then</code> continuation on the microtask queue.</p></section><section class="q"><h3 id="51-how-do-you-handle-errors-in-async-await">51. How do you handle errors in async/await?</h3><p class="short"><b>Short answer:</b> Wrap awaits in <code>try/catch/finally</code>, or attach <code>.catch</code> to the returned promise; a rejected awaited promise throws at the <code>await</code> line.</p><ul><li><code>try/catch</code> catches both rejections and synchronous throws inside the block.</li><li>Forgetting <code>await</code> inside <code>try</code> lets the rejection escape the <code>catch</code>.</li><li>A common helper returns <code>[error, data]</code> tuples so callers avoid nested try blocks.</li></ul><pre><code>const bad = () =&gt; Promise.reject(new Error("nope"));
+
+async function run() {
+  try {
+    await bad();
+  } catch (e) {
+    console.log("caught", e.message);
+  } finally {
+    console.log("cleanup");
+  }
+}
+run();</code></pre><p class="want"><b>Output:</b> <code>caught nope</code>, <code>cleanup</code></p><p class="tip"><b>Interview tip:</b> <code>return await promise</code> inside <code>try</code> is needed if you want the <code>catch</code> to handle that rejection; plain <code>return promise</code> skips it.</p></section><h2 id="part-8-async-javascript">Part 8: Async JavaScript</h2><section class="q"><h3 id="52-predict-the-order-sync-code-process-nexttick-settimeout-promises-and-queuemicrotask-what-is-the-difference-between-microtasks-and-macrotasks">52. Predict the order: sync code, process.nextTick/setTimeout, promises, and queueMicrotask. What is the difference between microtasks and macrotasks?</h3><p class="short"><b>Short answer:</b> After each macrotask (script, timer, I/O callback) the engine drains the entire microtask queue (promise callbacks, queueMicrotask) before running the next macrotask.</p><ul><li>Macrotasks: setTimeout, setInterval, I/O, UI events, MessageChannel.</li><li>Microtasks: Promise <code>.then/.catch/.finally</code>, <code>await</code> continuations, <code>queueMicrotask</code>, MutationObserver.</li><li>A microtask that queues another microtask runs in the same drain, so it can starve timers.</li><li>In Node, <code>process.nextTick</code> runs before promise microtasks.</li></ul><pre><code>console.log("1 sync");
+setTimeout(() =&gt; console.log("5 timeout"), 0);
+Promise.resolve().then(() =&gt; {
+  console.log("3 micro A");
+  queueMicrotask(() =&gt; console.log("4 micro nested"));
+});
+queueMicrotask(() =&gt; console.log("3b micro B"));
+console.log("2 sync end");</code></pre><p class="want"><b>Output:</b> <code>1 sync</code>, <code>2 sync end</code>, <code>3 micro A</code>, <code>3b micro B</code>, <code>4 micro nested</code>, <code>5 timeout</code> (one per line)</p><p class="tip"><b>Interview tip:</b> Say "drain all microtasks, then one macrotask" and note nested microtasks run before timers.</p></section><section class="q"><h3 id="53-what-is-abortcontroller-and-how-do-you-cancel-async-work">53. What is AbortController and how do you cancel async work?</h3><p class="short"><b>Short answer:</b> AbortController gives you a <code>signal</code> you pass to cancellable APIs (fetch, event listeners, timers/promises); calling <code>abort()</code> makes them reject with <code>AbortError</code>.</p><ul><li>One controller can cancel many operations through the same signal.</li><li>Typical use: cancel the previous request when a search input changes or a React component unmounts.</li><li><code>AbortSignal.timeout(ms)</code> creates a signal that aborts automatically.</li><li>Custom code can listen to <code>signal.addEventListener("abort", ...)</code>.</li></ul><pre><code>function cancellable(ms, signal) {
+  return new Promise((resolve, reject) =&gt; {
+    const t = setTimeout(() =&gt; resolve("done"), ms);
+    signal.addEventListener("abort", () =&gt; { clearTimeout(t); reject(signal.reason); });
+  });
+}
+const ctrl = new AbortController();
+cancellable(100, ctrl.signal).then(console.log, (e) =&gt; console.log(e.name));
+setTimeout(() =&gt; ctrl.abort(), 10);</code></pre><p class="want"><b>Output:</b> <code>AbortError</code></p><p class="tip"><b>Interview tip:</b> Use the "cancel stale search requests" example; it shows practical value.</p></section><section class="q"><h3 id="54-what-are-generators-and-where-are-they-useful">54. What are generators and where are they useful?</h3><p class="short"><b>Short answer:</b> A generator function (<code>function*</code>) can pause at <code>yield</code> and resume later, producing values lazily and enabling two-way communication via <code>next(value)</code>.</p><ul><li>Calling it returns an iterator; the body runs only as you call <code>next()</code>.</li><li>Great for lazy sequences, infinite streams, and custom iteration.</li><li><code>next(x)</code> sends <code>x</code> back as the result of the paused <code>yield</code> expression.</li><li>Redux-Saga and old <code>co</code>-style async code built on them; async/await replaced that.</li></ul><pre><code>function* idGen() { let id = 1; while (true) { const reset = yield id++; if (reset) id = 1; } }
+const g = idGen();
+console.log(g.next().value, g.next().value, g.next(true).value, g.next().value);
+function* take(n, it) { let i = 0; for (const v of it) { if (i++ &gt;= n) return; yield v; } }
+console.log([...take(3, idGen())]);</code></pre><p class="want"><b>Output:</b> <code>1 2 1 2</code> then <code>[ 1, 2, 3 ]</code></p><p class="tip"><b>Interview tip:</b> Highlight laziness (infinite sequences) and that <code>yield</code> can receive values.</p></section><section class="q"><h3 id="55-what-are-iterators-and-the-iterable-protocol-what-are-async-iterators">55. What are iterators and the iterable protocol? What are async iterators?</h3><p class="short"><b>Short answer:</b> An iterable has a <code>[Symbol.iterator]()</code> method returning an iterator, an object with <code>next()</code> that returns <code>{ value, done }</code>; async iterables use <code>Symbol.asyncIterator</code> and are consumed with <code>for await...of</code>.</p><ul><li><code>for...of</code>, spread, destructuring, <code>Array.from</code>, <code>Map</code>, and <code>Set</code> consume iterables.</li><li>Plain objects are not iterable unless you add <code>[Symbol.iterator]</code>.</li><li>Async iterators suit paginated APIs and streams.</li></ul><pre><code>const range = {
+  from: 1, to: 4,
+  [Symbol.iterator]() {
+    let c = this.from, t = this.to;
+    return { next: () =&gt; (c &lt;= t ? { value: c++, done: false } : { value: undefined, done: true }) };
+  },
+};
+console.log([...range], Math.max(...range));
+async function* pages() { for (let p = 1; p &lt;= 3; p++) yield p; }
+(async () =&gt; { const out = []; for await (const p of pages()) out.push(p); console.log(out); })();</code></pre><p class="want"><b>Output:</b> <code>[ 1, 2, 3, 4 ] 4</code> then <code>[ 1, 2, 3 ]</code></p><p class="tip"><b>Interview tip:</b> Recite the <code>{ value, done }</code> contract and mention <code>for await</code> for streams.</p></section><section class="q"><h3 id="56-how-do-you-run-async-calls-in-sequence-vs-parallel-and-why-does-await-inside-foreach-not-work">56. How do you run async calls in sequence vs parallel, and why does await inside forEach not work?</h3><p class="short"><b>Short answer:</b> <code>await</code> in a <code>for...of</code> loop runs sequentially; start all promises first then <code>Promise.all</code> to run in parallel; <code>forEach</code> ignores returned promises so it does not wait.</p><ul><li>Sequential is right when each step depends on the previous result or order matters.</li><li>Parallel is faster for independent calls; limit concurrency for large lists.</li><li><code>forEach(async ...)</code> fires all callbacks and returns immediately.</li><li>Use <code>for...of</code> with await, or <code>await Promise.all(arr.map(async ...))</code>.</li></ul><pre><code>const wait = (ms, v) =&gt; new Promise((r) =&gt; setTimeout(() =&gt; r(v), ms));
+(async () =&gt; {
+  let t = Date.now();
+  for (const n of [1, 2, 3]) await wait(30, n);
+  const seq = Date.now() - t;
+  t = Date.now();
+  await Promise.all([1, 2, 3].map((n) =&gt; wait(30, n)));
+  const par = Date.now() - t;
+  console.log(seq &gt;= 90, par &lt; 80);
+  [1, 2].forEach(async (n) =&gt; { await wait(10); console.log("forEach item", n); });
+  console.log("after forEach");
+})();</code></pre><p class="want"><b>Output:</b> <code>true true</code>, then <code>after forEach</code>, then <code>forEach item 1</code>, <code>forEach item 2</code></p><p class="tip"><b>Interview tip:</b> Mention a concurrency limiter (p-limit style) for hundreds of requests.</p></section><h2 id="part-9-es6-and-beyond">Part 9: ES6 and Beyond</h2><section class="q"><h3 id="57-how-does-destructuring-work-including-defaults-renaming-and-nesting">57. How does destructuring work, including defaults, renaming, and nesting?</h3><p class="short"><b>Short answer:</b> Destructuring unpacks array elements by position or object properties by name into variables, with optional defaults and renames.</p><ul><li>Defaults apply only when the value is <code>undefined</code>.</li><li>Rename with <code>{ a: alias }</code>; nest with <code>{ a: { b } }</code>.</li><li>Swap variables with <code>[a, b] = [b, a]</code>.</li><li>Function parameters can be destructured with defaults, a common config pattern.</li><li>Destructuring <code>null</code> or <code>undefined</code> throws a TypeError.</li></ul><pre><code>const { name: n, age = 30, address: { city } = {} } = { name: "Ria", address: { city: "Pune" } };
+console.log(n, age, city);
+const [first, , third = "def", ...rest] = [1, 2, undefined, 4, 5];
+console.log(first, third, rest);
+let a = 1, b = 2; [a, b] = [b, a];
+console.log(a, b);</code></pre><p class="want"><b>Output:</b> <code>Ria 30 Pune</code> then <code>1 def [ 4, 5 ]</code> then <code>2 1</code></p><p class="tip"><b>Interview tip:</b> Mention that defaults skip <code>null</code> and that parameter destructuring is how config objects are written.</p></section><section class="q"><h3 id="58-what-is-the-difference-between-spread-and-rest-operators">58. What is the difference between spread and rest operators?</h3><p class="short"><b>Short answer:</b> Both use <code>...</code>; rest collects remaining items into an array in a parameter or destructuring position, spread expands an iterable or object into individual items.</p><ul><li>Rest: <code>function f(...args)</code>, <code>const [h, ...t] = arr</code>.</li><li>Spread: <code>f(...arr)</code>, <code>[...a, ...b]</code>, <code>{ ...obj, k: 1 }</code>.</li><li>Object spread is shallow and later keys override earlier ones.</li><li>Rest must be the last element.</li></ul><pre><code>const sum = (...nums) =&gt; nums.reduce((a, b) =&gt; a + b, 0);
+console.log(sum(...[1, 2, 3], 4));
+const base = { a: 1, b: 2 };
+console.log({ ...base, b: 3, c: 4 }, [..."hi"]);
+const { a, ...others } = base;
+console.log(a, others);</code></pre><p class="want"><b>Output:</b> <code>10</code> then <code>{ a: 1, b: 3, c: 4 } [ 'h', 'i' ]</code> then <code>1 { b: 2 }</code></p><p class="tip"><b>Interview tip:</b> Say "rest gathers, spread scatters" and point out the shallow copy limit.</p></section><section class="q"><h3 id="59-what-is-optional-chaining-and-when-should-you-avoid-it">59. What is optional chaining and when should you avoid it?</h3><p class="short"><b>Short answer:</b> <code>a?.b</code>, <code>a?.[k]</code>, and <code>a?.()</code> short-circuit to <code>undefined</code> when <code>a</code> is null or undefined instead of throwing.</p><ul><li>It only guards <code>null</code> and <code>undefined</code>, not other falsy values such as 0 or "".</li><li>The whole rest of the chain is skipped on short-circuit.</li><li>Avoid chaining everything; it hides bugs where the data should always exist.</li><li>Combine with <code>??</code> for defaults: <code>user?.profile?.name ?? "Guest"</code>.</li></ul><pre><code>const user = { profile: { greet() { return "hi"; } }, count: 0 };
+console.log(user?.profile?.greet?.(), user.settings?.theme, user.missing?.fn());
+console.log(user.count?.toFixed(1), user?.["pro" + "file"] !== undefined);</code></pre><p class="want"><b>Output:</b> <code>hi undefined undefined</code> then <code>0.0 true</code></p><p class="tip"><b>Interview tip:</b> Warn that over-using <code>?.</code> can mask real data bugs.</p></section><section class="q"><h3 id="60-what-is-the-nullish-coalescing-operator-and-how-is-it-different-from">60. What is the nullish coalescing operator and how is it different from ||?</h3><p class="short"><b>Short answer:</b> <code>a ?? b</code> returns <code>b</code> only when <code>a</code> is null or undefined, while <code>a || b</code> returns <code>b</code> for any falsy <code>a</code>.</p><ul><li>Use <code>??</code> when 0, false, or "" are legitimate values.</li><li><code>??=</code> assigns only when the left side is nullish; <code>||=</code> when falsy.</li><li>Mixing <code>??</code> with <code>||</code> or <code>&amp;&amp;</code> without parentheses is a SyntaxError.</li></ul><pre><code>const settings = { volume: 0, title: "", dark: false };
+console.log(settings.volume || 50, settings.volume ?? 50);
+console.log(JSON.stringify(settings.title || "Untitled"), JSON.stringify(settings.title ?? "Untitled"));
+const o = { a: null, b: 0 };
+o.a ??= "set"; o.b ||= 9;
+console.log(o);</code></pre><p class="want"><b>Output:</b> <code>50 0</code> then <code>"Untitled" ""</code> then <code>{ a: 'set', b: 9 }</code></p><p class="tip"><b>Interview tip:</b> Use the volume-set-to-0 example; it is the classic bug.</p></section><section class="q"><h3 id="61-what-is-the-difference-between-es-modules-and-commonjs">61. What is the difference between ES Modules and CommonJS?</h3><p class="short"><b>Short answer:</b> ESM (<code>import</code>/<code>export</code>) is static, asynchronous, and exports live bindings; CommonJS (<code>require</code>/<code>module.exports</code>) is dynamic, synchronous, and exports copies of values.</p><div class="tw"><table><tr><th>Feature</th><th>ESM</th><th>CommonJS</th></tr><tr><td>Syntax</td><td><code>import</code> / <code>export</code></td><td><code>require</code> / <code>module.exports</code></td></tr><tr><td>Loading</td><td>Static analysis, async</td><td>Runtime, sync</td></tr><tr><td>Bindings</td><td>Live read-only</td><td>Value copy</td></tr><tr><td>Tree shaking</td><td>Yes</td><td>Hard</td></tr><tr><td>Top-level await</td><td>Yes</td><td>No</td></tr><tr><td><code>this</code> at top</td><td><code>undefined</code></td><td><code>module.exports</code></td></tr></table></div><ul><li>ESM imports are hoisted and parsed before execution; <code>import()</code> is the dynamic form.</li><li>Browsers support ESM natively with <code>&lt;script type="module"&gt;</code>, which is deferred by default.</li><li>Mixed codebases need care: <code>require</code> of ESM is awkward, and <code>__dirname</code> does not exist in ESM.</li></ul><pre><code>// CommonJS: exports are copies
+let count = 1;
+const mod = { get count() { return count; }, inc: () =&gt; count++ };
+const copied = mod.count;
+mod.inc();
+console.log(copied, mod.count);
+// ESM would give live bindings: importing `count` afterwards sees 2</code></pre><p class="want"><b>Output:</b> <code>1 2</code></p><p class="tip"><b>Interview tip:</b> The key phrases are "static vs dynamic" and "live bindings vs copies", plus tree shaking.</p></section><section class="q"><h3 id="62-what-are-tagged-template-literals">62. What are tagged template literals?</h3><p class="short"><b>Short answer:</b> A tag is a function that receives the string pieces and interpolated values of a template literal, letting you process or escape them.</p><ul><li>The tag gets <code>(strings, ...values)</code>; <code>strings.raw</code> holds unprocessed text.</li><li>Used by styled-components, GraphQL (<code>gql</code>), and safe-HTML or i18n helpers.</li><li>It can return anything, not just a string.</li></ul><pre><code>function highlight(strings, ...values) {
+  return strings.reduce((out, s, i) =&gt; out + s + (i &lt; values.length ? `[${values[i]}]` : ""), "");
+}
+const name = "Zoya", n = 3;
+console.log(highlight`Hello ${name}, you have ${n} items`);
+const safe = (s, ...v) =&gt; s.reduce((o, str, i) =&gt; o + str + (v[i] ?? "").toString().replace(/&lt;/g, "&amp;lt;"), "");
+console.log(safe`&lt;p&gt;${"&lt;script&gt;"}&lt;/p&gt;`);</code></pre><p class="want"><b>Output:</b> <code>Hello [Zoya], you have [3] items</code> then <code>&lt;p&gt;&amp;lt;script&gt;&lt;/p&gt;</code></p><p class="tip"><b>Interview tip:</b> Name styled-components and gql as familiar real-world users.</p></section><section class="q"><h3 id="63-what-are-proxy-and-reflect-and-where-are-they-used">63. What are Proxy and Reflect, and where are they used?</h3><p class="short"><b>Short answer:</b> A Proxy wraps an object and intercepts operations (get, set, has, deleteProperty, and more) through traps; Reflect provides the matching default operations.</p><ul><li>Use cases: validation, default values, logging, reactivity (Vue 3), read-only views.</li><li>Traps should usually call the matching <code>Reflect</code> method to preserve default behaviour.</li><li>A <code>set</code> trap must return true in strict mode or it throws.</li><li>Proxies add overhead and can break identity checks, so use them sparingly.</li></ul><pre><code>const validator = {
+  set(target, key, value, receiver) {
+    if (key === "age" &amp;&amp; !Number.isInteger(value)) throw new TypeError("age must be integer");
+    return Reflect.set(target, key, value, receiver);
+  },
+  get(target, key, receiver) { return key in target ? Reflect.get(target, key, receiver) : `no ${String(key)}`; },
+};
+const p = new Proxy({}, validator);
+p.age = 30;
+console.log(p.age, p.nope);
+try { p.age = "x"; } catch (e) { console.log(e.message); }</code></pre><p class="want"><b>Output:</b> <code>30 no nope</code> then <code>age must be integer</code></p><p class="tip"><b>Interview tip:</b> Mention that Vue 3 reactivity is built on Proxy.</p></section><h2 id="part-10-dom-and-events">Part 10: DOM and Events</h2><section class="q"><h3 id="64-explain-event-bubbling-and-capturing">64. Explain event bubbling and capturing.</h3><p class="short"><b>Short answer:</b> An event travels in three phases: capturing from window down to the target, the target phase, then bubbling back up; listeners run on bubble by default.</p><ul><li>Pass <code>{ capture: true }</code> (or <code>true</code>) as the third argument to listen during capture.</li><li><code>event.target</code> is the element that triggered the event; <code>event.currentTarget</code> is the element the listener is attached to.</li><li>Most events bubble; <code>focus</code>, <code>blur</code>, and <code>mouseenter</code> do not (use <code>focusin</code>/<code>focusout</code>).</li><li><code>{ once: true }</code> removes the listener after the first run.</li></ul><pre><code>// Plain simulation of the phase order (the DOM itself is not available in Node)
+const path = ["window", "div", "button"];
+const log = [];
+path.forEach((n) =&gt; log.push(n + " capture"));
+log.push("button target");
+[...path].reverse().slice(1).forEach((n) =&gt; log.push(n + " bubble"));
+console.log(log.join(" &gt; "));</code></pre><p class="want"><b>Output:</b> <code>window capture &gt; div capture &gt; button capture &gt; button target &gt; div bubble &gt; window bubble</code></p><p class="tip"><b>Interview tip:</b> Always name the three phases and the target vs currentTarget difference.</p></section><section class="q"><h3 id="65-what-is-event-delegation-and-why-is-it-useful">65. What is event delegation and why is it useful?</h3><p class="short"><b>Short answer:</b> Attach one listener on a parent and use <code>event.target</code> to handle events from many (even future) children, relying on bubbling.</p><ul><li>Saves memory: one listener instead of hundreds.</li><li>Works for dynamically added elements.</li><li>Use <code>event.target.closest(selector)</code> to handle clicks on nested children.</li><li>It does not work for events that do not bubble.</li></ul><pre><code>// Pseudo-DOM so the logic can be run in Node: parent receives bubbled event
+function dispatch(parentHandler, targetEl) { parentHandler({ target: targetEl }); }
+const items = [{ tag: "LI", id: 1 }, { tag: "LI", id: 2 }, { tag: "SPAN", id: 3 }];
+const handler = (e) =&gt; { if (e.target.tag === "LI") console.log("clicked item", e.target.id); };
+items.forEach((el) =&gt; dispatch(handler, el));
+// Browser version:
+// list.addEventListener("click", (e) =&gt; { const li = e.target.closest("li"); if (li &amp;&amp; list.contains(li)) {...} });</code></pre><p class="want"><b>Output:</b> <code>clicked item 1</code> then <code>clicked item 2</code></p><p class="tip"><b>Interview tip:</b> Mention <code>closest()</code> for nested children and dynamic elements as the benefits.</p></section><section class="q"><h3 id="66-what-is-the-difference-between-preventdefault-stoppropagation-and-stopimmediatepropagation">66. What is the difference between preventDefault, stopPropagation, and stopImmediatePropagation?</h3><p class="short"><b>Short answer:</b> preventDefault cancels the browser's default action; stopPropagation stops the event travelling to other elements; stopImmediatePropagation also stops other listeners on the same element.</p><div class="tw"><table><tr><th>Method</th><th>Stops default action</th><th>Stops other elements</th><th>Stops same-element listeners</th></tr><tr><td>preventDefault</td><td>Yes</td><td>No</td><td>No</td></tr><tr><td>stopPropagation</td><td>No</td><td>Yes</td><td>No</td></tr><tr><td>stopImmediatePropagation</td><td>No</td><td>Yes</td><td>Yes</td></tr></table></div><ul><li><code>return false</code> in a jQuery handler does both preventDefault and stopPropagation; in plain DOM handlers it only prevents default for <code>onclick</code> style handlers.</li><li>Use <code>event.defaultPrevented</code> to check and <code>cancelable</code> to know if cancelling is possible.</li><li>Passive listeners (<code>{ passive: true }</code>) cannot call preventDefault; browsers use this for smooth scrolling.</li></ul><pre><code>const t = new EventTarget();
+t.addEventListener("ping", (e) =&gt; { console.log("first"); e.stopImmediatePropagation(); });
+t.addEventListener("ping", () =&gt; console.log("second never runs"));
+const ev = new Event("ping", { cancelable: true });
+ev.preventDefault();
+t.dispatchEvent(ev);
+console.log(ev.defaultPrevented);</code></pre><p class="want"><b>Output:</b> <code>first</code> then <code>true</code></p><p class="tip"><b>Interview tip:</b> Give the link-click (default) vs nested-button-in-card (propagation) examples.</p></section><section class="q"><h3 id="67-what-are-the-differences-between-localstorage-sessionstorage-and-cookies">67. What are the differences between localStorage, sessionStorage, and cookies?</h3><p class="short"><b>Short answer:</b> localStorage persists until cleared, sessionStorage lasts for the tab session, and cookies are small, can expire, and are sent to the server with each request.</p><div class="tw"><table><tr><th>Feature</th><th>localStorage</th><th>sessionStorage</th><th>Cookies</th></tr><tr><td>Lifetime</td><td>Until cleared</td><td>Until tab closes</td><td>Set by <code>Expires</code>/<code>Max-Age</code></td></tr><tr><td>Size</td><td>About 5 MB</td><td>About 5 MB</td><td>About 4 KB</td></tr><tr><td>Sent to server</td><td>No</td><td>No</td><td>Yes, every request</td></tr><tr><td>Scope</td><td>Origin, shared across tabs</td><td>Origin and single tab</td><td>Domain and path</td></tr><tr><td>JS access</td><td>Always</td><td>Always</td><td>Blocked by <code>HttpOnly</code></td></tr></table></div><ul><li>Storage APIs are synchronous and store strings only (use JSON.stringify).</li><li>Never store tokens in localStorage if XSS is a concern; prefer <code>HttpOnly; Secure; SameSite</code> cookies.</li><li>Cookie flags: <code>HttpOnly</code> (hide from JS), <code>Secure</code> (HTTPS only), <code>SameSite</code> (CSRF control).</li><li>Other options: IndexedDB for large structured data.</li></ul><pre><code>// Browser-only APIs; here is a Node-safe demonstration of the string-only rule
+const store = new Map();
+const setItem = (k, v) =&gt; store.set(k, String(v));
+setItem("obj", { a: 1 }); setItem("n", 5);
+console.log(store.get("obj"), typeof store.get("n"));
+console.log(JSON.stringify({ a: 1 }), JSON.parse('{"a":1}').a);</code></pre><p class="want"><b>Output:</b> <code>[object Object] string</code> then <code>{"a":1} 1</code></p><p class="tip"><b>Interview tip:</b> Lead with the XSS/HttpOnly trade-off; it separates seniors from juniors.</p></section><section class="q"><h3 id="68-what-is-the-difference-between-debounce-and-throttle">68. What is the difference between debounce and throttle?</h3><p class="short"><b>Short answer:</b> Debounce waits until activity stops for N ms and then fires once; throttle fires at most once every N ms during continuous activity.</p><p class="want"><b>Real-life example:</b> Debounce is an elevator that waits until people stop entering; throttle is a bus leaving every 10 minutes regardless.</p><ul><li>Debounce: search-as-you-type, window-resize end, autosave.</li><li>Throttle: scroll position tracking, mousemove, button spam, infinite-scroll checks.</li><li>Debounce can delay forever if events never pause; throttle guarantees regular updates.</li><li>Options: leading edge (fire first) and trailing edge (fire last).</li></ul><pre><code>const calls = [0, 10, 20, 30, 200];
+const debounced = []; const throttled = [];
+let lastFire = -Infinity;
+calls.forEach((t, i) =&gt; {
+  const next = calls[i + 1];
+  if (next === undefined || next - t &gt;= 100) debounced.push(t);
+  if (t - lastFire &gt;= 100) { throttled.push(t); lastFire = t; }
+});
+console.log("debounce fires at", debounced, "throttle fires at", throttled);</code></pre><p class="want"><b>Output:</b> <code>debounce fires at [ 30, 200 ] throttle fires at [ 0, 200 ]</code></p><p class="tip"><b>Interview tip:</b> Give search box for debounce and scroll for throttle, then offer to implement both.</p></section><h2 id="part-11-polyfills">Part 11: Polyfills</h2><section class="q"><h3 id="69-how-do-you-resolve-an-array-of-promise-returning-tasks-sequentially">69. How do you resolve an array of promise-returning tasks sequentially?</h3><p class="short"><b>Short answer:</b> Fold the task list with <code>reduce</code>, starting from <code>Promise.resolve([])</code>, and chain each task inside the previous promise's <code>then</code> so the next one starts only after the last finishes.</p><ul><li>Tasks must be functions returning promises (not promises already running), otherwise they would all start immediately.</li><li>Each step spreads the previous results and appends the new one.</li><li>Modern equivalent: a <code>for...of</code> loop with <code>await</code>.</li></ul><pre><code>function resolvePromisesSequentially(tasks) {
+  return tasks.reduce(
+    (promise, task) =&gt; promise.then((result) =&gt; task().then((current) =&gt; [...result, current])),
+    Promise.resolve([])
+  );
+}
+
+const delay = (v, ms) =&gt; () =&gt; new Promise((resolve) =&gt; setTimeout(() =&gt; resolve(v), ms));
+resolvePromisesSequentially([delay("Task 1", 30), delay("Task 2", 10), delay("Task 3", 5)])
+  .then(console.log);
+
+async function sequential(tasks) {
+  const results = [];
+  for (const task of tasks) results.push(await task());
+  return results;
+}</code></pre><p class="want"><b>Output:</b> <code>[ 'Task 1', 'Task 2', 'Task 3' ]</code></p><p class="tip"><b>Interview tip:</b> Mention a concurrency-limited pool as the follow-up (run N tasks at a time).</p></section><section class="q"><h3 id="70-how-do-you-implement-infinite-currying-like-add-1-2-3">70. How do you implement infinite currying, like add(1)(2)(3)()?</h3><p class="short"><b>Short answer:</b> Return a function that either accumulates the next argument and returns itself again, or, when called with no argument, returns the accumulated total.</p><ul><li>The note's version tests <code>if (b)</code>, which wrongly stops on <code>0</code>; check <code>b === undefined</code> instead.</li><li>Each call returns a new closure holding the running sum.</li><li>A variant without the final <code>()</code> overrides <code>valueOf</code>/<code>toString</code> so that coercion yields the total.</li></ul><pre><code>function add(a) {
+  return function (b) {
+    if (b === undefined) return a;
+    return add(a + b);
+  };
+}
+console.log(add(1)(2)(3)(4)(5)());
+console.log(add(5)(0)(3)());</code></pre><p class="want"><b>Output:</b> <code>15</code>, <code>8</code></p><p class="tip"><b>Interview tip:</b> If asked for <code>add(1)(2)(3) == 6</code> without the trailing call, mention overriding <code>valueOf</code> on the returned function.</p></section><section class="q"><h3 id="71-how-do-you-implement-curry">71. How do you implement curry?</h3><p class="short"><b>Short answer:</b> Collect arguments across calls until their count reaches the original function's <code>length</code>, then call it with all of them.</p><ul><li><code>func.length</code> is the number of declared parameters (it ignores rest parameters and defaults).</li><li>It supports mixed calls such as <code>curried(1, 2)(3)</code> and <code>curried(1)(2, 3)</code>.</li><li>Currying enables partial application and reusable specialised functions.</li></ul><pre><code>function curry(func) {
+  return function curried(...args) {
+    if (args.length &gt;= func.length) return func.apply(this, args);
+    return (...next) =&gt; curried.apply(this, [...args, ...next]);
+  };
+}
+
+const sum = (a, b, c) =&gt; a + b + c;
+const curriedSum = curry(sum);
+console.log(curriedSum(1)(2)(3), curriedSum(1, 2)(3), curriedSum(1)(2, 3));</code></pre><p class="want"><b>Output:</b> <code>6 6 6</code></p><p class="tip"><b>Interview tip:</b> Contrast currying (one argument at a time) with partial application (fix some arguments now).</p></section><section class="q"><h3 id="72-how-do-you-implement-function-prototype-call">72. How do you implement Function.prototype.call?</h3><p class="short"><b>Short answer:</b> Temporarily attach the function to the target object under a unique key, call it as a method so <code>this</code> is that object, then remove it and return the result.</p><ul><li>The note's <code>context.fn</code> can overwrite a real <code>fn</code> property and does not box primitives; use a <code>Symbol</code> key and <code>Object(context)</code>.</li><li><code>window</code> does not exist in Node; use <code>globalThis</code>.</li><li>Wrapping in <code>try/finally</code> guarantees cleanup even if the function throws.</li><li>This mimics sloppy-mode semantics (null or undefined becomes global); the native <code>call</code> follows the callee's strictness.</li></ul><pre><code>Function.prototype.myCall = function (context, ...args) {
+  if (typeof this !== "function") throw new TypeError("myCall must be called on a function");
+  context = context === null || context === undefined ? globalThis : Object(context);
+  const key = Symbol("fn");
+  context[key] = this;
+  try {
+    return context[key](...args);
+  } finally {
+    delete context[key];
+  }
+};
+
+function greet(greeting, punct) { return greeting + ", " + this.name + punct; }
+console.log(greet.myCall({ name: "Asha" }, "Hi", "!"));
+console.log(greet.call({ name: "Asha" }, "Hi", "!"));</code></pre><p class="want"><b>Output:</b> <code>Hi, Asha!</code>, <code>Hi, Asha!</code></p><p class="tip"><b>Interview tip:</b> The key trick is "make the function a method of the object", because <code>this</code> is set by the receiver of the call.</p></section><section class="q"><h3 id="73-how-do-you-implement-function-prototype-apply">73. How do you implement Function.prototype.apply?</h3><p class="short"><b>Short answer:</b> Same as <code>call</code>, but the arguments arrive as one array (or array-like), so unpack them when invoking.</p><ul><li>A missing or <code>null</code> argument list means no arguments.</li><li>Real <code>apply</code> accepts any array-like, so convert with <code>Array.from</code> rather than rejecting everything that is not an array.</li><li>Non-object, non-nullish argument lists throw <code>TypeError</code>.</li></ul><pre><code>Function.prototype.myApply = function (context, args) {
+  if (typeof this !== "function") throw new TypeError("myApply must be called on a function");
+  if (args !== null &amp;&amp; args !== undefined &amp;&amp; typeof args !== "object") {
+    throw new TypeError("Arguments must be an array-like object");
+  }
+  context = context === null || context === undefined ? globalThis : Object(context);
+  const key = Symbol("fn");
+  context[key] = this;
+  try {
+    return context[key](...Array.from(args || []));
+  } finally {
+    delete context[key];
+  }
+};
+
+function greet(greeting, punct) { return greeting + ", " + this.name + punct; }
+console.log(greet.myApply({ name: "Ben" }, ["Yo", "?"]));
+console.log(Math.max.myApply(null, [1, 5, 3]));</code></pre><p class="want"><b>Output:</b> <code>Yo, Ben?</code>, <code>5</code></p><p class="tip"><b>Interview tip:</b> Mnemonic: <code>apply</code> takes an array, <code>call</code> takes a comma-separated list.</p></section><section class="q"><h3 id="74-how-do-you-implement-function-prototype-bind">74. How do you implement Function.prototype.bind?</h3><p class="short"><b>Short answer:</b> Return a new function that calls the original with a fixed <code>this</code> and pre-filled arguments, appending any later arguments; it must return the result and also work with <code>new</code>.</p><ul><li>The note's version never returns the result of the call, and <code>context.fn</code> pollutes the target object.</li><li><code>target.apply(context, ...)</code> is enough for <code>this</code> binding; no temporary property is needed.</li><li>With <code>new</code>, the bound <code>this</code> is ignored and the freshly created object is used, so the prototype chain must still link to the original.</li><li>Partial application falls out for free by concatenating bound and new arguments.</li></ul><pre><code>Function.prototype.myBind = function (context, ...boundArgs) {
+  const target = this;
+  if (typeof target !== "function") throw new TypeError("myBind must be called on a function");
+  function bound(...newArgs) {
+    const useNew = this instanceof bound;
+    return target.apply(useNew ? this : context, [...boundArgs, ...newArgs]);
+  }
+  if (target.prototype) bound.prototype = Object.create(target.prototype);
+  return bound;
+};
+
+function greet(g, p) { return g + ", " + this.name + p; }
+console.log(greet.myBind({ name: "Asha" }, "Hello")("!"));
+
+function Point(x, y) { this.x = x; this.y = y; }
+const PointX1 = Point.myBind(null, 1);
+const pt = new PointX1(2);
+console.log(pt.x, pt.y, pt instanceof Point);</code></pre><p class="want"><b>Output:</b> <code>Hello, Asha!</code>, <code>1 2 true</code></p><p class="tip"><b>Interview tip:</b> A function's <code>this</code> can be bound only once; calling <code>bind</code> on an already bound function cannot change it.</p></section><section class="q"><h3 id="75-how-do-you-implement-array-prototype-map">75. How do you implement Array.prototype.map?</h3><p class="short"><b>Short answer:</b> Loop over the array, call the callback with <code>(element, index, array)</code> and a <code>thisArg</code>, store each return value in a new array of the same length, and skip holes.</p><ul><li><code>map</code> never mutates the original array and always returns a new array of equal length.</li><li>Validate that the callback is a function, throwing <code>TypeError</code> otherwise.</li><li>Sparse arrays: skipped holes stay holes in the output, hence the <code>i in this</code> check.</li></ul><pre><code>Array.prototype.myMap = function (callback, thisArg) {
+  if (typeof callback !== "function") throw new TypeError(callback + " is not a function");
+  const result = new Array(this.length);
+  for (let i = 0; i &lt; this.length; i++) {
+    if (i in this) result[i] = callback.call(thisArg, this[i], i, this);
+  }
+  return result;
+};
+
+console.log([1, 2, 3].myMap((n, i) =&gt; n * 2 + i));
+console.log(["1", "2", "3"].myMap(Number));</code></pre><p class="want"><b>Output:</b> <code>[ 2, 5, 8 ]</code>, <code>[ 1, 2, 3 ]</code></p><p class="tip"><b>Interview tip:</b> The classic trap is <code>["1","2","3"].map(parseInt)</code> giving <code>[1, NaN, NaN]</code> because <code>map</code> passes the index as the radix.</p></section><section class="q"><h3 id="76-how-do-you-implement-array-prototype-filter">76. How do you implement Array.prototype.filter?</h3><p class="short"><b>Short answer:</b> Loop, call the callback for each element and push the element into a new array only when the callback returns a truthy value.</p><ul><li>Returns a new array that may be shorter; it does not mutate the original.</li><li>The callback receives <code>(element, index, array)</code> and a <code>thisArg</code>.</li><li>Holes are skipped.</li></ul><pre><code>Array.prototype.myFilter = function (callback, thisArg) {
+  if (typeof callback !== "function") throw new TypeError(callback + " is not a function");
+  const result = [];
+  for (let i = 0; i &lt; this.length; i++) {
+    if (i in this &amp;&amp; callback.call(thisArg, this[i], i, this)) result.push(this[i]);
+  }
+  return result;
+};
+
+console.log([1, 2, 3, 4, 5].myFilter((n) =&gt; n % 2));
+console.log(["a", "", "b", 0].myFilter(Boolean));</code></pre><p class="want"><b>Output:</b> <code>[ 1, 3, 5 ]</code>, <code>[ 'a', 'b' ]</code></p><p class="tip"><b>Interview tip:</b> Mention that <code>filter</code> plus <code>map</code> walks the array twice and <code>reduce</code> can fuse them into one pass.</p></section><section class="q"><h3 id="77-how-do-you-implement-array-prototype-reduce">77. How do you implement Array.prototype.reduce?</h3><p class="short"><b>Short answer:</b> Keep an accumulator; if no initial value is given use the first present element as the start, then fold the callback <code>(acc, element, index, array)</code> over the rest.</p><ul><li>With no initial value and an empty array, native <code>reduce</code> throws <code>TypeError</code>; the polyfill must too.</li><li>Check <code>arguments</code>-style presence (not truthiness) so an initial value of <code>0</code> or <code>undefined</code> is respected.</li><li>Skip holes and start the loop after the element used as the seed.</li></ul><pre><code>Array.prototype.myReduce = function (callback, ...initial) {
+  if (typeof callback !== "function") throw new TypeError(callback + " is not a function");
+  let i = 0;
+  let acc;
+  if (initial.length) {
+    acc = initial[0];
+  } else {
+    while (i &lt; this.length &amp;&amp; !(i in this)) i++;
+    if (i &gt;= this.length) throw new TypeError("Reduce of empty array with no initial value");
+    acc = this[i++];
+  }
+  for (; i &lt; this.length; i++) {
+    if (i in this) acc = callback(acc, this[i], i, this);
+  }
+  return acc;
+};
+
+console.log([1, 2, 3, 4].myReduce((a, b) =&gt; a + b));
+console.log([1, 2, 3].myReduce((a, b) =&gt; a + b, 10));
+try { [].myReduce((a, b) =&gt; a + b); } catch (e) { console.log(e.message); }</code></pre><p class="want"><b>Output:</b> <code>10</code>, <code>16</code>, <code>Reduce of empty array with no initial value</code></p><p class="tip"><b>Interview tip:</b> Once you have <code>reduce</code>, you can derive <code>map</code>, <code>filter</code>, <code>flat</code> and <code>Promise</code> sequencing from it.</p></section><section class="q"><h3 id="78-how-do-you-implement-a-promise-from-scratch">78. How do you implement a Promise from scratch?</h3><p class="short"><b>Short answer:</b> Keep a state (<code>pending</code>/<code>fulfilled</code>/<code>rejected</code>), a value and a list of handlers; <code>then</code> returns a new promise and every handler runs asynchronously (microtask) after the promise settles.</p><ul><li>Bugs in the original note: <code>reject</code> called <code>this.onReject(value)</code> with an undefined variable (should be <code>this.value</code>); <code>then</code> returned <code>this</code>, so chaining and multiple handlers do not work; handlers were stored in a single slot and run synchronously.</li><li><code>then</code> must return a new promise whose fate depends on the handler's return value or throw.</li><li>If a handler returns a thenable, the outer promise adopts its result (the <code>adopt</code> function below).</li><li>Handlers added after settling must still run, so <code>then</code> checks the current state.</li></ul><pre><code>class MyPromise {
+  #state = "pending";
+  #value;
+  #handlers = [];
+
+  constructor(executor) {
+    const settle = (state, value) =&gt; {
+      if (this.#state !== "pending") return;
+      this.#state = state;
+      this.#value = value;
+      this.#handlers.forEach((h) =&gt; this.#run(h));
+      this.#handlers = [];
+    };
+    const adopt = (v) =&gt; {
+      if (v === this) return settle("rejected", new TypeError("Chaining cycle detected"));
+      if (v !== null &amp;&amp; (typeof v === "object" || typeof v === "function")) {
+        let then;
+        try { then = v.then; } catch (e) { return settle("rejected", e); }
+        if (typeof then === "function") {
+          let called = false;
+          try {
+            then.call(
+              v,
+              (x) =&gt; { if (!called) { called = true; adopt(x); } },
+              (r) =&gt; { if (!called) { called = true; settle("rejected", r); } }
+            );
+          } catch (e) {
+            if (!called) { called = true; settle("rejected", e); }
+          }
+          return;
+        }
+      }
+      settle("fulfilled", v);
+    };
+    let locked = false;
+    const resolve = (v) =&gt; { if (!locked) { locked = true; adopt(v); } };
+    const reject = (r) =&gt; { if (!locked) { locked = true; settle("rejected", r); } };
+    try { executor(resolve, reject); } catch (e) { reject(e); }
+  }
+
+  #run({ onFulfilled, onRejected, resolve, reject }) {
+    queueMicrotask(() =&gt; {
+      const fulfilled = this.#state === "fulfilled";
+      const cb = fulfilled ? onFulfilled : onRejected;
+      if (typeof cb !== "function") return (fulfilled ? resolve : reject)(this.#value);
+      try { resolve(cb(this.#value)); } catch (e) { reject(e); }
+    });
+  }
+
+  then(onFulfilled, onRejected) {
+    return new MyPromise((resolve, reject) =&gt; {
+      const handler = { onFulfilled, onRejected, resolve, reject };
+      if (this.#state === "pending") this.#handlers.push(handler);
+      else this.#run(handler);
+    });
+  }
+
+  catch(onRejected) { return this.then(undefined, onRejected); }
+
+  finally(fn) {
+    return this.then(
+      (v) =&gt; MyPromise.resolve(fn()).then(() =&gt; v),
+      (r) =&gt; MyPromise.resolve(fn()).then(() =&gt; { throw r; })
+    );
+  }
+
+  static resolve(v) { return v instanceof MyPromise ? v : new MyPromise((res) =&gt; res(v)); }
+  static reject(r) { return new MyPromise((_, rej) =&gt; rej(r)); }
+}
+
+console.log("sync start");
+new MyPromise((res) =&gt; setTimeout(() =&gt; res(1), 10))
+  .then((v) =&gt; v + 1)
+  .then((v) =&gt; { throw new Error("x" + v); })
+  .catch((e) =&gt; e.message)
+  .then(console.log);
+MyPromise.resolve("now").then(console.log);
+console.log("sync end");</code></pre><p class="want"><b>Output:</b> <code>sync start</code>, <code>sync end</code>, <code>now</code>, <code>x2</code></p><p class="tip"><b>Interview tip:</b> In interviews, a smaller version (state, value, callback queue, chainable <code>then</code>) is acceptable; the key points are asynchronous handlers and <code>then</code> returning a new promise.</p></section><section class="q"><h3 id="79-how-do-you-implement-promise-all">79. How do you implement Promise.all?</h3><p class="short"><b>Short answer:</b> Return a new promise that stores each result at its original index, counts remaining items, resolves when the count hits zero, and rejects on the first rejection.</p><ul><li>Wrap each item with <code>Promise.resolve</code> so plain values work.</li><li>Use the index, not push order, so results keep input order.</li><li>Handle an empty input by resolving immediately with <code>[]</code>.</li></ul><pre><code>Promise.myAll = function (iterable) {
+  return new Promise((resolve, reject) =&gt; {
+    const items = Array.from(iterable);
+    const results = new Array(items.length);
+    let remaining = items.length;
+    if (remaining === 0) return resolve(results);
+    items.forEach((item, i) =&gt; {
+      Promise.resolve(item).then((value) =&gt; {
+        results[i] = value;
+        if (--remaining === 0) resolve(results);
+      }, reject);
+    });
+  });
+};
+
+const later = (v, ms) =&gt; new Promise((r) =&gt; setTimeout(() =&gt; r(v), ms));
+Promise.myAll([later("a", 20), 2, later("c", 5)]).then(console.log);
+Promise.myAll([later("a", 20), Promise.reject("err")]).catch(console.log);</code></pre><p class="want"><b>Output:</b> <code>err</code>, then <code>[ 'a', 2, 'c' ]</code></p><p class="tip"><b>Interview tip:</b> Most bugs are using <code>push</code> (wrong order) or comparing <code>results.length</code> instead of a counter (breaks with holes).</p></section><section class="q"><h3 id="80-how-do-you-implement-promise-allsettled">80. How do you implement Promise.allSettled?</h3><p class="short"><b>Short answer:</b> Same as <code>all</code>, but convert every outcome into a <code>{status, value}</code> or <code>{status, reason}</code> object and resolve after all have settled; it never rejects.</p><ul><li>Attach both a fulfil and a reject handler to each item.</li><li>Store results by index.</li><li>Resolve once the counter reaches zero.</li></ul><pre><code>Promise.myAllSettled = function (iterable) {
+  return new Promise((resolve) =&gt; {
+    const items = Array.from(iterable);
+    const results = new Array(items.length);
+    let remaining = items.length;
+    if (remaining === 0) return resolve(results);
+    const done = (i, outcome) =&gt; {
+      results[i] = outcome;
+      if (--remaining === 0) resolve(results);
+    };
+    items.forEach((item, i) =&gt; {
+      Promise.resolve(item).then(
+        (value) =&gt; done(i, { status: "fulfilled", value }),
+        (reason) =&gt; done(i, { status: "rejected", reason })
+      );
+    });
+  });
+};
+
+Promise.myAllSettled([Promise.resolve(1), Promise.reject("no"), 3])
+  .then((r) =&gt; console.log(JSON.stringify(r)));</code></pre><p class="want"><b>Output:</b> <code>[{"status":"fulfilled","value":1},{"status":"rejected","reason":"no"},{"status":"fulfilled","value":3}]</code></p><p class="tip"><b>Interview tip:</b> The only difference from <code>all</code> is the rejection handler that records instead of rejecting.</p></section><section class="q"><h3 id="81-how-do-you-implement-promise-race">81. How do you implement Promise.race?</h3><p class="short"><b>Short answer:</b> Return a promise that subscribes <code>resolve</code> and <code>reject</code> to every item; whichever settles first wins because later calls are ignored.</p><ul><li>Wrap items in <code>Promise.resolve</code> so plain values count as already settled.</li><li>An empty input leaves the promise pending forever, matching native behavior.</li><li>No counters are needed because a promise settles only once.</li></ul><pre><code>Promise.myRace = function (iterable) {
+  return new Promise((resolve, reject) =&gt; {
+    for (const item of iterable) Promise.resolve(item).then(resolve, reject);
+  });
+};
+
+const later = (v, ms) =&gt; new Promise((r) =&gt; setTimeout(() =&gt; r(v), ms));
+Promise.myRace([later("slow", 30), later("fast", 10)]).then(console.log);</code></pre><p class="want"><b>Output:</b> <code>fast</code></p><p class="tip"><b>Interview tip:</b> Offer the timeout use case: <code>Promise.race([fetch(url), timeoutPromise])</code>.</p></section><section class="q"><h3 id="82-how-do-you-implement-promise-any">82. How do you implement Promise.any?</h3><p class="short"><b>Short answer:</b> Resolve with the first fulfilment; collect rejection reasons by index and, if all items reject, reject with an <code>AggregateError</code> containing them.</p><ul><li>Mirror image of <code>all</code>: first success wins, all failures lose.</li><li>Empty input rejects immediately with <code>AggregateError</code>.</li><li><code>AggregateError(errors, message)</code> is the built-in error type for this.</li></ul><pre><code>Promise.myAny = function (iterable) {
+  return new Promise((resolve, reject) =&gt; {
+    const items = Array.from(iterable);
+    const errors = new Array(items.length);
+    let remaining = items.length;
+    const fail = () =&gt; reject(new AggregateError(errors, "All promises were rejected"));
+    if (remaining === 0) return fail();
+    items.forEach((item, i) =&gt; {
+      Promise.resolve(item).then(resolve, (reason) =&gt; {
+        errors[i] = reason;
+        if (--remaining === 0) fail();
+      });
+    });
+  });
+};
+
+Promise.myAny([Promise.reject("a"), new Promise((r) =&gt; setTimeout(() =&gt; r("b"), 10))]).then(console.log);
+Promise.myAny([Promise.reject("a"), Promise.reject("b")]).catch((e) =&gt; console.log(e.name, e.errors));</code></pre><p class="want"><b>Output:</b> <code>AggregateError [ 'a', 'b' ]</code>, then <code>b</code></p><p class="tip"><b>Interview tip:</b> Explain <code>any</code> as <code>all</code> with success and failure swapped.</p></section><section class="q"><h3 id="83-how-do-you-implement-array-prototype-flat">83. How do you implement Array.prototype.flat?</h3><p class="short"><b>Short answer:</b> Walk the array recursively; when an element is an array and depth remains, flatten it with <code>depth - 1</code>, otherwise push it; default depth is 1 and <code>Infinity</code> flattens fully.</p><ul><li>Holes are skipped, like the native method.</li><li>Do not mutate the original array.</li><li>An iterative stack version avoids recursion limits on very deep nesting.</li></ul><pre><code>Array.prototype.myFlat = function (depth = 1) {
+  const result = [];
+  const walk = (arr, d) =&gt; {
+    for (let i = 0; i &lt; arr.length; i++) {
+      if (!(i in arr)) continue;
+      const el = arr[i];
+      if (Array.isArray(el) &amp;&amp; d &gt; 0) walk(el, d - 1);
+      else result.push(el);
+    }
+  };
+  walk(this, depth);
+  return result;
+};
+
+const nested = [1, [2, [3, [4]]]];
+console.log(JSON.stringify(nested.myFlat()), JSON.stringify(nested.myFlat(Infinity)));</code></pre><p class="want"><b>Output:</b> <code>[1,2,[3,[4]]] [1,2,3,4]</code></p><p class="tip"><b>Interview tip:</b> Offer the one-liner <code>arr.toString().split(",")</code> only as a trick and say why it fails (it stringifies everything).</p></section><h2 id="part-12-coding-questions">Part 12: Coding Questions</h2><section class="q"><h3 id="84-implement-debounce-with-cancel-and-optional-leading-edge">84. Implement debounce (with cancel and optional leading edge).</h3><p class="short"><b>Short answer:</b> Keep a timer id in a closure; each call clears the previous timer and schedules a new one, so only the last call within the delay runs.</p><ul><li>Preserve <code>this</code> and arguments with <code>fn.apply(this, args)</code>.</li><li>Leading mode fires immediately on the first call, then ignores calls until the pause.</li><li>Expose <code>cancel()</code> for cleanup on unmount.</li></ul><pre><code>function debounce(fn, delay, { leading = false } = {}) {
+  let timer = null;
+  function debounced(...args) {
+    const callNow = leading &amp;&amp; timer === null;
+    clearTimeout(timer);
+    timer = setTimeout(() =&gt; {
+      timer = null;
+      if (!leading) fn.apply(this, args);
+    }, delay);
+    if (callNow) fn.apply(this, args);
+  }
+  debounced.cancel = () =&gt; { clearTimeout(timer); timer = null; };
+  return debounced;
+}
+const trailing = debounce((x) =&gt; console.log("trailing", x), 20);
+trailing(1); trailing(2); trailing(3);
+const lead = debounce((x) =&gt; console.log("leading", x), 20, { leading: true });
+lead("a"); lead("b");
+const c = debounce(() =&gt; console.log("never"), 20); c(); c.cancel();</code></pre><p class="want"><b>Output:</b> <code>leading a</code> then <code>trailing 3</code></p><p class="tip"><b>Interview tip:</b> Ask whether leading or trailing edge is wanted; interviewers reward that question.</p></section><section class="q"><h3 id="85-implement-throttle">85. Implement throttle.</h3><p class="short"><b>Short answer:</b> Record the last execution time; run the function only if at least <code>limit</code> ms have passed, optionally scheduling a trailing call with the latest arguments.</p><ul><li>The trailing call ensures the final state is not lost.</li><li>Use <code>Date.now()</code> for simplicity or a timer for the trailing edge.</li></ul><pre><code>function throttle(fn, limit) {
+  let last = 0, timer = null, lastArgs;
+  return function (...args) {
+    const now = Date.now();
+    lastArgs = args;
+    if (now - last &gt;= limit) {
+      last = now;
+      fn.apply(this, args);
+    } else if (!timer) {
+      timer = setTimeout(() =&gt; {
+        last = Date.now(); timer = null;
+        fn.apply(this, lastArgs);
+      }, limit - (now - last));
+    }
+  };
+}
+const t = throttle((x) =&gt; console.log("run", x), 50);
+t(1); t(2); t(3);
+setTimeout(() =&gt; t(4), 20);
+setTimeout(() =&gt; t(5), 120);</code></pre><p class="want"><b>Output:</b> <code>run 1</code>, <code>run 4</code>, <code>run 5</code> (one per line)</p><p class="tip"><b>Interview tip:</b> Describe the trailing call and why it matters for the last scroll position.</p></section><section class="q"><h3 id="86-implement-memoize-with-a-cache-key-for-multiple-arguments">86. Implement memoize (with a cache key for multiple arguments).</h3><p class="short"><b>Short answer:</b> Wrap the function with a cache keyed on the arguments; return the cached result when the key exists.</p><ul><li>Use <code>JSON.stringify(args)</code> for simple keys; use a Map tree or WeakMap for object arguments.</li><li>Only memoize pure functions, and bound the cache size to avoid memory growth.</li><li>Use <code>cache.has(key)</code> rather than a truthy check so falsy results are cached.</li></ul><pre><code>function memoize(fn) {
+  const cache = new Map();
+  return function (...args) {
+    const key = JSON.stringify(args);
+    if (cache.has(key)) return cache.get(key);
+    const result = fn.apply(this, args);
+    cache.set(key, result);
+    return result;
+  };
+}
+let calls = 0;
+const slowSquare = (n) =&gt; { calls++; return n * n; };
+const fast = memoize(slowSquare);
+fast(4); fast(4); fast(5);
+console.log(calls);
+const fib = memoize((n) =&gt; (n &lt; 2 ? n : fib(n - 1) + fib(n - 2)));
+console.log(fib(50));</code></pre><p class="want"><b>Output:</b> <code>2</code> then <code>12586269025</code></p><p class="tip"><b>Interview tip:</b> Mention cache-size limits (LRU) and that only pure functions are safe to memoize.</p></section><section class="q"><h3 id="87-implement-once-run-a-function-only-one-time">87. Implement once (run a function only one time).</h3><p class="short"><b>Short answer:</b> Keep a flag and the first result in a closure; later calls return the stored result without calling the function.</p><ul><li>Use cases: initialisation, analytics events, one-time setup.</li><li>Cache the result so later calls return the same value.</li></ul><pre><code>function once(fn) {
+  let called = false, result;
+  return function (...args) {
+    if (!called) { called = true; result = fn.apply(this, args); }
+    return result;
+  };
+}
+const init = once((x) =&gt; { console.log("init", x); return x * 2; });
+console.log(init(5), init(100));</code></pre><p class="want"><b>Output:</b> <code>init 5</code> then <code>10 10</code></p><p class="tip"><b>Interview tip:</b> Mention that the result is cached so later calls return the same value.</p></section><section class="q"><h3 id="88-implement-an-eventemitter-on-off-once-emit">88. Implement an EventEmitter (on, off, once, emit).</h3><p class="short"><b>Short answer:</b> Store listeners in a Map from event name to a list; <code>emit</code> calls each listener, <code>once</code> wraps the listener so it removes itself.</p><ul><li>Copy the listener array before iterating so removal during emit is safe.</li><li><code>off</code> should also remove <code>once</code>-wrapped listeners (keep a reference to the original).</li></ul><pre><code>class EventEmitter {
+  #events = new Map();
+  on(name, fn) { (this.#events.get(name) ?? this.#events.set(name, []).get(name)).push(fn); return this; }
+  off(name, fn) {
+    const list = this.#events.get(name);
+    if (list) this.#events.set(name, list.filter((l) =&gt; l !== fn &amp;&amp; l.original !== fn));
+    return this;
+  }
+  once(name, fn) {
+    const wrapper = (...args) =&gt; { this.off(name, wrapper); fn(...args); };
+    wrapper.original = fn;
+    return this.on(name, wrapper);
+  }
+  emit(name, ...args) {
+    const list = this.#events.get(name) ?? [];
+    [...list].forEach((fn) =&gt; fn(...args));
+    return list.length &gt; 0;
+  }
+}
+const e = new EventEmitter();
+const hi = (n) =&gt; console.log("hi", n);
+e.on("greet", hi); e.once("greet", (n) =&gt; console.log("once", n));
+e.emit("greet", "A"); e.emit("greet", "B");
+e.off("greet", hi);
+console.log(e.emit("greet", "C"));</code></pre><p class="want"><b>Output:</b> <code>hi A</code>, <code>once A</code>, <code>hi B</code>, then <code>false</code></p><p class="tip"><b>Interview tip:</b> Mention copying the array before iterating, and the once/off interaction.</p></section><section class="q"><h3 id="89-implement-deepequal">89. Implement deepEqual.</h3><p class="short"><b>Short answer:</b> Compare primitives with <code>Object.is</code>, then compare types, key counts, and each key recursively; handle arrays, Dates, and cycles if asked.</p><ul><li>Short-circuit on same reference.</li><li>Check <code>Object.keys</code> lengths and that every key exists in both.</li><li>Treat <code>NaN</code> as equal to itself with <code>Object.is</code>.</li></ul><pre><code>function deepEqual(a, b, seen = new WeakMap()) {
+  if (Object.is(a, b)) return true;
+  if (typeof a !== "object" || typeof b !== "object" || a === null || b === null) return false;
+  if (Object.getPrototypeOf(a) !== Object.getPrototypeOf(b)) return false;
+  if (a instanceof Date) return a.getTime() === b.getTime();
+  if (seen.get(a) === b) return true;
+  seen.set(a, b);
+  const ka = Reflect.ownKeys(a), kb = Reflect.ownKeys(b);
+  if (ka.length !== kb.length) return false;
+  return ka.every((k) =&gt; Object.hasOwn(b, k) &amp;&amp; deepEqual(a[k], b[k], seen));
+}
+console.log(deepEqual({ a: [1, { b: NaN }] }, { a: [1, { b: NaN }] }));
+console.log(deepEqual({ a: 1 }, { a: 1, b: undefined }), deepEqual([1, 2], { 0: 1, 1: 2 }));
+console.log(deepEqual(new Date(5), new Date(5)));</code></pre><p class="want"><b>Output:</b> <code>true</code> then <code>false false</code> then <code>true</code></p><p class="tip"><b>Interview tip:</b> Mention key-count checks, NaN via <code>Object.is</code>, and cycle handling.</p></section><section class="q"><h3 id="90-implement-a-function-that-retries-a-promise-returning-task-n-times-with-delay">90. Implement a function that retries a promise-returning task N times (with delay).</h3><p class="short"><b>Short answer:</b> Loop up to N attempts, <code>await</code> the task in try/catch, wait with a delay between failures, and throw the last error when attempts run out.</p><ul><li>Use exponential backoff in real code (delay doubles) plus jitter.</li><li>Only retry transient errors (network, 5xx), not 4xx.</li></ul><pre><code>const sleep = (ms) =&gt; new Promise((r) =&gt; setTimeout(r, ms));
+async function retry(task, attempts = 3, delay = 10) {
+  let lastErr;
+  for (let i = 1; i &lt;= attempts; i++) {
+    try { return await task(i); }
+    catch (err) {
+      lastErr = err;
+      if (i &lt; attempts) await sleep(delay * 2 ** (i - 1));
+    }
+  }
+  throw lastErr;
+}
+(async () =&gt; {
+  console.log(await retry(async (n) =&gt; { if (n &lt; 3) throw new Error("flaky " + n); return "ok on " + n; }));
+  try { await retry(async (n) =&gt; { throw new Error("always " + n); }, 2); } catch (e) { console.log(e.message); }
+})();</code></pre><p class="want"><b>Output:</b> <code>ok on 3</code> then <code>always 2</code></p><p class="tip"><b>Interview tip:</b> Mention exponential backoff with jitter and not retrying 4xx errors.</p></section><section class="q"><h3 id="91-split-an-array-into-chunks-of-size-n">91. Split an array into chunks of size N.</h3><p class="short"><b>Short answer:</b> Step through the array with a stride of N and slice each segment.</p><ul><li>Handle a last shorter chunk naturally via <code>slice</code>.</li><li>Validate <code>size &gt; 0</code> to avoid infinite loops.</li></ul><pre><code>function chunk(arr, size) {
+  if (!Number.isInteger(size) || size &lt; 1) throw new RangeError("size must be a positive integer");
+  const out = [];
+  for (let i = 0; i &lt; arr.length; i += size) out.push(arr.slice(i, i + size));
+  return out;
+}
+console.log(chunk([1, 2, 3, 4, 5], 2), chunk([], 3));
+try { chunk([1], 0); } catch (e) { console.log(e.name); }</code></pre><p class="want"><b>Output:</b> <code>[ [ 1, 2 ], [ 3, 4 ], [ 5 ] ] []</code> then <code>RangeError</code></p><p class="tip"><b>Interview tip:</b> Validate <code>size</code> and mention using <code>Array.from</code> with <code>Math.ceil(len / size)</code> as the one-liner alternative.</p></section><section class="q"><h3 id="92-implement-groupby-and-know-the-built-in-object-groupby">92. Implement groupBy (and know the built-in Object.groupBy).</h3><p class="short"><b>Short answer:</b> Reduce the array into an object whose keys come from a callback and whose values are arrays of matching items.</p><ul><li>Modern runtimes provide <code>Object.groupBy(items, fn)</code> (plain object) and <code>Map.groupBy</code>.</li><li>Create the target with <code>Object.create(null)</code> to avoid prototype-key collisions.</li></ul><pre><code>const groupBy = (arr, fn) =&gt;
+  arr.reduce((acc, item) =&gt; {
+    const key = typeof fn === "function" ? fn(item) : item[fn];
+    (acc[key] ||= []).push(item);
+    return acc;
+  }, Object.create(null));
+const people = [{ n: "A", age: 20 }, { n: "B", age: 30 }, { n: "C", age: 20 }];
+const byAge = groupBy(people, "age");
+console.log(Object.keys(byAge), byAge[20].map((p) =&gt; p.n));
+console.log(typeof Object.groupBy, Object.groupBy([1, 2, 3], (x) =&gt; (x % 2 ? "odd" : "even")).odd);</code></pre><p class="want"><b>Output:</b> <code>[ '20', '30' ] [ 'A', 'C' ]</code> then <code>function [ 1, 3 ]</code></p><p class="tip"><b>Interview tip:</b> Name <code>Object.groupBy</code> to show you track the language, then still write the reduce version.</p></section><h2 id="part-13-output-based-trick-questions">Part 13: Output-Based Trick Questions</h2><section class="q"><h3 id="93-what-does-1-2-3-map-parseint-return">93. What does ["1", "2", "3"].map(parseInt) return?</h3><p class="short"><b>Short answer:</b> <code>[1, NaN, NaN]</code>, because <code>map</code> passes (value, index, array) and <code>parseInt</code> treats the index as the radix.</p><ul><li><code>parseInt("1", 0)</code> uses radix 10 so it returns 1.</li><li><code>parseInt("2", 1)</code> is invalid (radix 1) so NaN; <code>parseInt("3", 2)</code> is NaN because 3 is not a binary digit.</li><li>Fix with <code>map(Number)</code> or <code>map((s) =&gt; parseInt(s, 10))</code>.</li></ul><pre><code>console.log(["1", "2", "3"].map(parseInt));
+console.log(["1", "2", "3"].map(Number), ["1", "2", "3"].map((s) =&gt; parseInt(s, 10)));</code></pre><p class="want"><b>Output:</b> <code>[ 1, NaN, NaN ]</code> then <code>[ 1, 2, 3 ] [ 1, 2, 3 ]</code></p><p class="tip"><b>Interview tip:</b> Explain the extra callback arguments; that is the lesson.</p></section><section class="q"><h3 id="94-what-is-the-output-of-the-default-sort-on-numbers">94. What is the output of the default sort on numbers?</h3><p class="short"><b>Short answer:</b> Default <code>sort()</code> compares elements as strings, so <code>[10, 9, 1].sort()</code> gives <code>[1, 10, 9]</code>.</p><ul><li>Pass a comparator <code>(a, b) =&gt; a - b</code> for numeric order.</li><li><code>sort</code> mutates the array in place; <code>toSorted</code> returns a copy.</li><li><code>undefined</code> values always sort to the end.</li></ul><pre><code>console.log([10, 9, 1].sort(), [10, 9, 1].sort((a, b) =&gt; a - b));
+console.log([3, undefined, 1].sort(), ["b", "a", "B"].sort());</code></pre><p class="want"><b>Output:</b> <code>[ 1, 10, 9 ] [ 1, 9, 10 ]</code> then <code>[ 1, 3, undefined ] [ 'B', 'a', 'b' ]</code></p><p class="tip"><b>Interview tip:</b> Mention that sort mutates and offers <code>toSorted</code> as the copy.</p></section><section class="q"><h3 id="95-what-does-this-chained-assignment-print">95. What does this chained assignment print?</h3><p class="short"><b>Short answer:</b> <code>a.x = a = { n: 2 }</code> evaluates the left reference <code>a.x</code> first (against the old object), so the old object gets <code>x</code>, while <code>a</code> now points to the new object.</p><ul><li>The property target is resolved before the right side executes.</li><li><code>b</code> still references the old object, which now has <code>x</code>.</li></ul><pre><code>let a = { n: 1 };
+const b = a;
+a.x = a = { n: 2 };
+console.log(a.x, b.x, b);</code></pre><p class="want"><b>Output:</b> <code>undefined { n: 2 } { n: 1, x: { n: 2 } }</code></p><p class="tip"><b>Interview tip:</b> Say "left-hand reference is evaluated first".</p></section><section class="q"><h3 id="96-what-is-the-output-when-objects-are-used-as-object-keys">96. What is the output when objects are used as object keys?</h3><p class="short"><b>Short answer:</b> Object keys are converted to strings, so every plain object becomes <code>"[object Object]"</code> and later assignments overwrite earlier ones.</p><ul><li>Use a <code>Map</code> when keys should be objects.</li></ul><pre><code>const a = {}, b = { key: "b" }, c = { key: "c" };
+a[b] = 123;
+a[c] = 456;
+console.log(a[b], Object.keys(a));</code></pre><p class="want"><b>Output:</b> <code>456 [ '[object Object]' ]</code></p><p class="tip"><b>Interview tip:</b> Offer Map or WeakMap as the fix.</p></section><section class="q"><h3 id="97-in-what-order-does-this-async-await-code-print">97. In what order does this async/await code print?</h3><p class="short"><b>Short answer:</b> Code after <code>await</code> is a microtask continuation, so it runs after the current synchronous code and before timers.</p><ul><li><code>async</code> functions run synchronously until the first <code>await</code>.</li><li>The awaited value is wrapped in a resolved promise; the continuation runs in a microtask.</li></ul><pre><code>async function a1() { console.log("a1 start"); await a2(); console.log("a1 end"); }
+async function a2() { console.log("a2"); }
+console.log("script start");
+setTimeout(() =&gt; console.log("timeout"), 0);
+a1();
+new Promise((res) =&gt; { console.log("promise executor"); res(); }).then(() =&gt; console.log("promise then"));
+console.log("script end");</code></pre><p class="want"><b>Output:</b> <code>script start</code>, <code>a1 start</code>, <code>a2</code>, <code>promise executor</code>, <code>script end</code>, <code>a1 end</code>, <code>promise then</code>, <code>timeout</code> (one per line)</p><p class="tip"><b>Interview tip:</b> Say "everything after await is a microtask" and walk through line by line.</p></section><section class="q"><h3 id="98-what-does-a-return-in-try-finally-produce">98. What does a return in try/finally produce?</h3><p class="short"><b>Short answer:</b> <code>finally</code> always runs, and a <code>return</code> inside <code>finally</code> overrides the value returned from <code>try</code> or <code>catch</code>.</p><ul><li>Avoid returning from <code>finally</code>; it also swallows thrown errors.</li></ul><pre><code>function f() { try { return "try"; } finally { console.log("finally runs"); } }
+function g() { try { return "try"; } finally { return "finally"; } }
+function h() { try { throw new Error("lost"); } finally { return "swallowed"; } }
+console.log(f(), g(), h());</code></pre><p class="want"><b>Output:</b> <code>finally runs</code> then <code>try finally swallowed</code></p><p class="tip"><b>Interview tip:</b> Mention that finally can swallow errors; that is why it is a lint rule.</p></section><section class="q"><h3 id="99-why-is-true">99. Why is [] == ![] true?</h3><p class="short"><b>Short answer:</b> <code>![]</code> is <code>false</code>, then <code>[] == false</code> converts both sides to numbers: <code>[]</code> becomes <code>""</code> then 0, and <code>false</code> becomes 0.</p><ul><li>Step by step: <code>![]</code> gives false; false becomes 0; <code>[]</code> becomes <code>""</code> then 0; <code>0 == 0</code> is true.</li><li>It shows why <code>===</code> is preferred.</li></ul><pre><code>console.log(![], [] == ![], [] == false, [] === false);
+console.log(Number([]), Number([5]), Number([1, 2]), Number({}));</code></pre><p class="want"><b>Output:</b> <code>false true true false</code> then <code>0 5 NaN NaN</code></p><p class="tip"><b>Interview tip:</b> Show the conversion steps rather than memorising the answer.</p></section><h2 id="part-14-browser-rendering-performance">Part 14: Browser, Rendering &amp; Performance</h2><section class="q"><h3 id="100-how-does-a-browser-turn-html-css-and-js-into-pixels-critical-rendering-path">100. How does a browser turn HTML, CSS and JS into pixels (critical rendering path)?</h3><p class="short"><b>Short answer:</b> It builds the DOM from HTML and the CSSOM from CSS, runs JavaScript that may change either, combines them into a render tree of visible elements, computes layout (size and position), paints pixels into layers, composites the layers and draws them to the screen.</p><ul><li>1. Parse HTML into the DOM (incrementally, as bytes arrive).</li><li>2. Parse CSS into the CSSOM (CSS blocks rendering, not parsing).</li><li>3. Run JavaScript; scripts can read or modify the DOM and CSSOM, so a classic script blocks the parser.</li><li>4. Combine into the render tree (elements with <code>display: none</code> and <code>&lt;head&gt;</code> are excluded).</li><li>5. Style and layout (reflow): compute the geometry of each element.</li><li>6. Paint: fill in pixels for text, colours, borders and images in layers.</li><li>7. Composite: stack overlapping layers (often on the GPU) and display the result.</li><li>The first meaningful paint cannot happen until the HTML, render-blocking CSS and render-blocking JS needed for initial render have arrived.</li></ul><p class="tip"><b>Interview tip:</b> Name which steps are re-run on a change: layout changes redo layout, paint and composite; colour changes redo paint and composite; <code>transform</code>/<code>opacity</code> often redo only composite.</p></section><section class="q"><h3 id="101-what-is-the-difference-between-reflow-and-repaint">101. What is the difference between reflow and repaint?</h3><p class="short"><b>Short answer:</b> Reflow (layout) recalculates the size and position of elements after a geometry change; repaint redraws pixels after a visual change that does not affect layout. Reflow is more expensive and always forces a repaint.</p><ul><li>Reflow triggers: adding or removing DOM elements, changing width, height, margin, padding, font size, window resize, reading layout properties like <code>offsetHeight</code> after a write (forced synchronous layout).</li><li>Repaint-only triggers: <code>color</code>, <code>background-color</code>, <code>visibility</code>, <code>box-shadow</code>, <code>outline</code>.</li><li>Composite-only (cheapest): <code>transform</code> and <code>opacity</code> on their own layer.</li><li>Avoid layout thrashing: batch all reads, then all writes; use <code>requestAnimationFrame</code> and CSS classes instead of many inline style changes.</li></ul><pre><code>// Layout thrashing: each read forces a fresh layout after the previous write
+items.forEach((el) =&gt; { el.style.width = el.offsetWidth + 10 + "px"; });
+
+// Better: read all first, then write
+const widths = items.map((el) =&gt; el.offsetWidth);
+items.forEach((el, i) =&gt; { el.style.width = widths[i] + 10 + "px"; });</code></pre><p class="tip"><b>Interview tip:</b> Mention <code>will-change</code> and <code>transform</code> animations as ways to move work to the compositor.</p></section><section class="q"><h3 id="102-what-is-the-difference-between-normal-async-and-defer-scripts">102. What is the difference between normal, async and defer scripts?</h3><p class="short"><b>Short answer:</b> A normal script blocks HTML parsing while it downloads and runs; <code>async</code> downloads in parallel and runs as soon as it arrives (pausing parsing at that moment); <code>defer</code> downloads in parallel and runs after the HTML is fully parsed, in document order.</p><div class="tw"><table><tr><th></th><th>Normal</th><th>async</th><th>defer</th></tr><tr><td>Download</td><td>blocks parser</td><td>parallel</td><td>parallel</td></tr><tr><td>Execution</td><td>immediately, blocking</td><td>as soon as downloaded, may pause parsing</td><td>after parsing, before <code>DOMContentLoaded</code></td></tr><tr><td>Order preserved</td><td>yes</td><td>no</td><td>yes</td></tr><tr><td>Best for</td><td>rare, must-run-first code</td><td>independent scripts (analytics, ads)</td><td>app code that touches the DOM</td></tr></table></div><ul><li>Note: by default scripts load and execute synchronously in the order they appear.</li><li><code>defer</code> has no effect on inline scripts, and <code>type="module"</code> scripts are deferred by default.</li><li>Put normal scripts at the end of <code>&lt;body&gt;</code>, or use <code>defer</code>, so they do not delay first render.</li></ul><p class="tip"><b>Interview tip:</b> Use <code>async</code> only for scripts with no dependencies on each other or on the DOM being ready.</p></section><section class="q"><h3 id="103-what-are-render-blocking-and-parser-blocking-resources-and-what-is-the-preload-scanner">103. What are render-blocking and parser-blocking resources, and what is the preload scanner?</h3><p class="short"><b>Short answer:</b> Render-blocking resources (CSS, and JS in <code>&lt;head&gt;</code>) stop the browser from painting until they are processed; parser-blocking resources (synchronous scripts) stop the HTML parser itself. The preload scanner is a secondary parser that discovers upcoming resources while the main parser is blocked.</p><ul><li>CSS blocks rendering but not HTML parsing: the browser keeps building the DOM in the background.</li><li>Synchronous JS is parser-blocking because it could change the DOM (<code>document.write</code>) or CSSOM, and it also waits for any pending CSS.</li><li>The preload scanner looks ahead in the raw HTML for <code>&lt;img&gt;</code>, <code>&lt;link&gt;</code> and <code>&lt;script&gt;</code> and starts those downloads early.</li><li>It cannot see resources injected by JavaScript or referenced from CSS (<code>background-image</code>), so those start late; use <code>&lt;link rel="preload"&gt;</code>.</li></ul><p class="tip"><b>Interview tip:</b> Keep important resources discoverable in the initial HTML so the preload scanner can find them.</p></section><section class="q"><h3 id="104-how-would-you-optimise-the-critical-rendering-path">104. How would you optimise the critical rendering path?</h3><p class="short"><b>Short answer:</b> Reduce the number of critical resources, their size and the number of round trips: inline or split critical CSS, defer non-critical CSS and JS, compress and minify, and preload what the first view needs.</p><ul><li>Minimise critical bytes: minify and compress (gzip or Brotli), remove unused CSS and JS.</li><li>Reduce critical resources: inline small critical CSS, use <code>media</code> attributes so non-matching stylesheets do not block render.</li><li>Shorten the path: <code>defer</code>/<code>async</code> scripts, <code>&lt;link rel="preload"&gt;</code> for fonts and hero images, <code>preconnect</code> for required origins.</li><li>Cut server time with caching and a CDN, which helps TTFB and LCP.</li><li>Lazy-load below-the-fold images and code-split JavaScript.</li></ul><p class="tip"><b>Interview tip:</b> Tie each tactic to a metric: preload and inlined CSS help LCP, <code>defer</code> helps both LCP and INP.</p></section><section class="q"><h3 id="105-how-does-http-caching-with-cache-control-work">105. How does HTTP caching with Cache-Control work?</h3><p class="short"><b>Short answer:</b> The <code>Cache-Control</code> response header tells the browser whether and for how long it may reuse a response: <code>no-store</code> means never cache, <code>no-cache</code> means cache but revalidate with the server before every reuse, and <code>max-age=N</code> means reuse for N seconds without asking.</p><ul><li><code>no-store</code>: nothing is written to the cache; use for sensitive data.</li><li><code>no-cache</code>: a stored copy may exist but must be validated (usually with <code>ETag</code> or <code>Last-Modified</code>) before use.</li><li><code>max-age=30</code>: for 30 seconds the browser serves from its memory or disk cache with no network request; afterwards it revalidates or refetches.</li><li><code>public</code>/<code>private</code> control whether shared caches (CDNs) may store it; <code>immutable</code> plus a long <code>max-age</code> suits fingerprinted assets like <code>app.3f9a1c.js</code>.</li><li><code>no-cache</code> is a common misnomer: it does not mean "do not cache".</li></ul><p class="tip"><b>Interview tip:</b> Strategy: fingerprint static assets with long <code>max-age</code> and <code>immutable</code>, and serve HTML with <code>no-cache</code> so deploys are picked up immediately.</p></section><section class="q"><h3 id="106-what-is-the-difference-between-etag-and-last-modified-conditional-requests-304">106. What is the difference between ETag and Last-Modified (conditional requests, 304)?</h3><p class="short"><b>Short answer:</b> Both enable revalidation: the server sends a validator (<code>ETag</code>, a content fingerprint, or <code>Last-Modified</code>, a timestamp), the browser sends it back in <code>If-None-Match</code> or <code>If-Modified-Since</code>, and the server replies <code>304 Not Modified</code> with no body if nothing changed.</p><ul><li><code>ETag</code> is an identifier (usually a hash of the content) that must change whenever the content changes; it is more precise than a timestamp.</li><li><code>Last-Modified</code> has one-second resolution and can mismatch across servers.</li><li>A 304 saves bandwidth, not the round trip.</li><li>When both are present, <code>If-None-Match</code> takes priority.</li><li>Hashing the current time (as in some examples) defeats the purpose because the validator would change on every request; hash the content or use a version number.</li></ul><pre><code>const crypto = require("crypto");
+
+function respond(reqHeaders, body, lastModified) {
+  const etag = '"' + crypto.createHash("md5").update(body).digest("hex") + '"';
+  const headers = { "cache-control": "no-cache", etag, "last-modified": lastModified.toUTCString() };
+  const notModified = reqHeaders["if-none-match"]
+    ? reqHeaders["if-none-match"] === etag
+    : reqHeaders["if-modified-since"] &amp;&amp;
+      lastModified &lt;= new Date(reqHeaders["if-modified-since"]);
+  return notModified ? { status: 304, headers } : { status: 200, headers, body };
+}
+
+const modified = new Date("2024-01-01T00:00:00Z");
+const first = respond({}, "hello", modified);
+console.log(first.status);
+console.log(respond({ "if-none-match": first.headers.etag }, "hello", modified).status);
+console.log(respond({ "if-none-match": first.headers.etag }, "changed", modified).status);
+console.log(respond({ "if-modified-since": modified.toUTCString() }, "hello", modified).status);</code></pre><p class="want"><b>Output:</b> <code>200</code>, <code>304</code>, <code>200</code>, <code>304</code></p><p class="tip"><b>Interview tip:</b> Mention the <code>Cache-Control: no-cache</code> plus <code>ETag</code> pairing, because a validator without a freshness policy leaves the browser guessing with heuristics.</p></section><section class="q"><h3 id="107-what-are-core-web-vitals">107. What are Core Web Vitals?</h3><p class="short"><b>Short answer:</b> Web Vitals are Google's user-experience metrics; the Core ones are LCP (loading), INP (responsiveness) and CLS (visual stability), with TTFB as a supporting server metric.</p><div class="tw"><table><tr><th>Metric</th><th>Measures</th><th>Good threshold</th></tr><tr><td>LCP (Largest Contentful Paint)</td><td>time until the largest visible element renders</td><td>2.5 s or less</td></tr><tr><td>INP (Interaction to Next Paint)</td><td>latency of interactions across the whole visit</td><td>200 ms or less</td></tr><tr><td>CLS (Cumulative Layout Shift)</td><td>unexpected layout movement</td><td>0.1 or less</td></tr><tr><td>TTFB (Time to First Byte)</td><td>time until the first byte of the response arrives</td><td>about 0.8 s or less</td></tr><tr><td>FID (First Input Delay)</td><td>delay before the first interaction is handled (replaced by INP in March 2024)</td><td>100 ms or less</td></tr></table></div><ul><li>Fix LCP with a faster server, preloading the hero image and cutting render-blocking resources.</li><li>Fix INP by breaking up long tasks and reducing main-thread JavaScript.</li><li>Fix CLS by setting width and height on images and reserving space for ads and embeds.</li></ul><p class="tip"><b>Interview tip:</b> The notes list FID, which is deprecated; saying INP replaced it shows you are current.</p></section><h2 id="part-15-security-and-miscellaneous">Part 15: Security and Miscellaneous</h2><section class="q"><h3 id="108-what-is-xss-and-how-do-you-prevent-it">108. What is XSS and how do you prevent it?</h3><p class="short"><b>Short answer:</b> Cross-site scripting lets an attacker inject script that runs in your page's origin; prevent it by escaping output, avoiding raw HTML sinks, sanitising, and using a Content Security Policy.</p><ul><li>Types: stored (saved in DB), reflected (in URL/response), DOM-based (client-side sink).</li><li>Dangerous sinks: <code>innerHTML</code>, <code>document.write</code>, <code>eval</code>, <code>dangerouslySetInnerHTML</code>, <code>javascript:</code> URLs.</li><li>Use <code>textContent</code>, framework auto-escaping, and DOMPurify when HTML is needed.</li><li>Add a strict CSP, <code>HttpOnly</code> cookies, and validate input on the server.</li></ul><pre><code>const escapeHtml = (s) =&gt;
+  s.replace(/[&amp;&lt;&gt;"']/g, (c) =&gt; ({ "&amp;": "&amp;amp;", "&lt;": "&amp;lt;", "&gt;": "&amp;gt;", '"': "&amp;quot;", "'": "&amp;#39;" }[c]));
+console.log(escapeHtml('&lt;img src=x onerror="alert(1)"&gt;'));</code></pre><p class="want"><b>Output:</b> <code>&amp;lt;img src=x onerror=&amp;quot;alert(1)&amp;quot;&amp;gt;</code></p><p class="tip"><b>Interview tip:</b> Name the three types and say "textContent over innerHTML, plus CSP".</p></section><section class="q"><h3 id="109-what-is-csrf-and-how-do-you-prevent-it">109. What is CSRF and how do you prevent it?</h3><p class="short"><b>Short answer:</b> Cross-site request forgery tricks a logged-in user's browser into sending an authenticated request to your site from another site; prevent it with SameSite cookies and CSRF tokens.</p><ul><li>It works because browsers attach cookies automatically.</li><li>Defences: <code>SameSite=Lax/Strict</code> cookies, anti-CSRF tokens, checking <code>Origin</code>/<code>Referer</code>, custom headers.</li><li>Never change state with GET requests.</li><li>CSRF abuses the cookie; XSS abuses script execution, and XSS defeats CSRF tokens.</li></ul><pre><code>// Server-side token check sketch (Node)
+const crypto = require("crypto");
+const sessionToken = crypto.randomBytes(16).toString("hex");
+const verify = (submitted) =&gt; submitted.length === sessionToken.length &amp;&amp;
+  crypto.timingSafeEqual(Buffer.from(submitted), Buffer.from(sessionToken));
+console.log(verify(sessionToken), verify("x".repeat(32)));</code></pre><p class="want"><b>Output:</b> <code>true false</code></p><p class="tip"><b>Interview tip:</b> Contrast it with XSS and name SameSite as the modern first defence.</p></section><section class="q"><h3 id="110-what-is-cors-and-why-do-preflight-requests-happen">110. What is CORS and why do preflight requests happen?</h3><p class="short"><b>Short answer:</b> CORS is a browser mechanism that lets a server declare which other origins may read its responses; it relaxes the same-origin policy and is enforced by the browser, not the server.</p><ul><li>Origin is scheme + host + port.</li><li>Simple requests (GET/POST with basic headers) are sent directly; the browser then checks <code>Access-Control-Allow-Origin</code>.</li><li>Non-simple requests (PUT/DELETE, JSON content-type, custom headers) trigger an OPTIONS preflight first.</li><li>Credentials need <code>Access-Control-Allow-Credentials: true</code> and a specific origin (not <code>*</code>).</li><li>CORS errors do not stop curl or Postman; they only protect browser users.</li></ul><pre><code>const sameOrigin = (a, b) =&gt; {
+  const x = new URL(a), y = new URL(b);
+  return x.protocol === y.protocol &amp;&amp; x.host === y.host;
+};
+console.log(sameOrigin("https://app.com/a", "https://app.com/b"));
+console.log(sameOrigin("https://app.com", "https://api.app.com"), sameOrigin("http://app.com", "https://app.com"));</code></pre><p class="want"><b>Output:</b> <code>true</code> then <code>false false</code></p><p class="tip"><b>Interview tip:</b> Say "browser-enforced, server-configured" and explain the preflight trigger.</p></section><section class="q"><h3 id="111-what-are-common-causes-of-memory-leaks-in-javascript">111. What are common causes of memory leaks in JavaScript?</h3><p class="short"><b>Short answer:</b> A leak happens when objects stay reachable but are no longer needed; common causes are forgotten timers or listeners, accidental globals, detached DOM nodes, and unbounded caches.</p><ul><li>Uncleared <code>setInterval</code> or event listeners keep closures (and everything they capture) alive.</li><li>Accidental globals from missing <code>let/const</code> never get collected.</li><li>Closures holding large objects, and Maps used as caches that never evict.</li><li>Detect with Chrome DevTools heap snapshots and the Performance memory timeline.</li><li>Fix: clean up in unmount/dispose, use <code>WeakMap</code>/<code>WeakRef</code>, bound caches, and <code>AbortController</code> for listeners.</li></ul><pre><code>const bigHolders = [];
+function leaky() { const big = new Array(1e5).fill("x"); bigHolders.push(() =&gt; big.length); }
+leaky(); leaky();
+console.log(bigHolders.length, bigHolders[0]());
+const timer = setInterval(() =&gt; {}, 1000);
+clearInterval(timer);
+console.log("timer cleared");</code></pre><p class="want"><b>Output:</b> <code>2 100000</code> then <code>timer cleared</code></p><p class="tip"><b>Interview tip:</b> List the four causes (timers, listeners, globals, detached DOM) and the DevTools tool.</p></section><section class="q"><h3 id="112-how-does-garbage-collection-work-in-javascript">112. How does garbage collection work in JavaScript?</h3><p class="short"><b>Short answer:</b> Engines use automatic mark-and-sweep: starting from roots (globals, the stack), they mark everything reachable and free the rest.</p><ul><li>Reference counting is not used by modern engines because it cannot collect cycles.</li><li>V8 is generational: a young generation for short-lived objects (scavenge) and an old generation (mark-sweep-compact).</li><li>GC runs incrementally and concurrently to reduce pauses; timing is not controllable.</li><li><code>WeakRef</code> and <code>FinalizationRegistry</code> exist but their callbacks are not guaranteed to run.</li></ul><pre><code>let obj = { data: new Array(10).fill(0) };
+const ref = new WeakRef(obj);
+console.log(ref.deref() === obj);
+obj = null; // now unreachable; collection timing is up to the engine
+console.log(typeof ref.deref());</code></pre><p class="want"><b>Output:</b> <code>true</code> then <code>object</code></p><p class="tip"><b>Interview tip:</b> Say "reachability, not reference counting" and mention cycles are fine for mark-and-sweep.</p></section><h2 id="part-16-browser-react-internals">Part 16: Browser &amp; React internals</h2><section class="q"><h3 id="113-how-does-react-update-the-dom-virtual-dom-and-reconciliation">113. How does React update the DOM (virtual DOM and reconciliation)?</h3><p class="short"><b>Short answer:</b> React keeps a lightweight tree of JavaScript objects (the virtual DOM) describing the UI; on a state or props change it renders a new tree, diffs it against the previous one (reconciliation) and applies only the minimal changes to the real DOM.</p><ul><li>Initial render: components run, returning React elements, and React builds the real DOM from them.</li><li>Update trigger: <code>setState</code> or a new prop schedules a re-render of that component and its children.</li><li>Reconciliation (diffing): React compares old and new trees; different element types mean replace the subtree, same types mean update props, and <code>key</code>s identify moved list items.</li><li>Commit: the computed changes (patches) are applied to the real DOM in one batch.</li><li>After the commit the browser still runs its own style, layout (reflow) and paint steps.</li></ul><p class="tip"><b>Interview tip:</b> The virtual DOM is not the speed secret; batching and minimal DOM writes are, and React 18 added automatic batching and concurrent rendering on top.</p></section><section class="q"><h3 id="114-what-does-react-memo-do">114. What does React.memo do?</h3><p class="short"><b>Short answer:</b> <code>React.memo</code> is a higher-order component that skips re-rendering a component when its props are shallowly equal to the previous props.</p><ul><li>It compares props with <code>Object.is</code> per prop, so new object, array or function props defeat it.</li><li>Stabilise props with <code>useMemo</code> and <code>useCallback</code>, or pass a custom comparison function as the second argument.</li><li>It does not stop re-renders caused by the component's own state or context changes.</li><li>Use it for expensive components that re-render often with unchanged props, not by default everywhere.</li></ul><pre><code>const Row = React.memo(function Row({ item, onSelect }) {
+  return &lt;li onClick={() =&gt; onSelect(item.id)}&gt;{item.name}&lt;/li&gt;;
+});</code></pre><p class="tip"><b>Interview tip:</b> If memo "does not work", check whether the parent passes an inline arrow function or object literal each render.</p></section></main></div>
+<script>
+const f=document.getElementById('f');
+f.addEventListener('input',()=>{const q=f.value.toLowerCase();
+document.querySelectorAll('nav a.l3').forEach(a=>{a.style.display=a.textContent.toLowerCase().includes(q)?'':'none'});
+document.querySelectorAll('section.q').forEach(s=>{s.style.display=!q||s.textContent.toLowerCase().includes(q)?'':'none'});});
+</script></body></html>
